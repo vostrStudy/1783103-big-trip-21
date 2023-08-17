@@ -8,6 +8,7 @@ export default class EventPresenter {
   constructor({eventContainer}) {
     this.eventContainer = eventContainer;
   }
+  
   init() {
     render(this.eventComponent, this.eventContainer);
     render(new EditView(), this.eventComponent.getElement());

@@ -1,5 +1,3 @@
-
-
 function createEditTemplate(){
   return`
             <li class="trip-events__item">
@@ -113,6 +111,6 @@ function createEditTemplate(){
                   </section>
                 </section>
               </form>
-            </li>`;  
+            </li>;`  
 }
 export {createEditTemplate};
