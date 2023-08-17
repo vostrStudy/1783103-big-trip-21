@@ -1,7 +1,7 @@
 
 
 function createEditTemplate(){
-    return`
+  return`
             <li class="trip-events__item">
                 <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
@@ -113,8 +113,6 @@ function createEditTemplate(){
                   </section>
                 </section>
               </form>
-            </li>`
-            
-};
-
-export {createEditTemplate}
+            </li>`;  
+}
+export {createEditTemplate};
