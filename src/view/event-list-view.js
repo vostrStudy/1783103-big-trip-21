@@ -8,7 +8,7 @@ export default class EventList {
 
   getElement() {
     if(!this.element) {
-        this.element = createElement(this.getTemplate());
+      this.element = createElement(this.getTemplate());
     }
     return this.element;
   }

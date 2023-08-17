@@ -8,12 +8,12 @@ export default class EditView {
 
   getElement() {
     if(!this.element) {
-        this.element = createElement(this.getTemplate());
+      this.element = createElement(this.getTemplate());
     }
     return this.element;
   }
 
   removeElement(){
-  this.eement = null;
-}
+    this.eement = null;
+  }
 }

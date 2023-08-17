@@ -22,7 +22,7 @@ function createFilterTemplate(){
                 </div>
 
                 <button class="visually-hidden" type="submit">Accept filter</button>
-        </form>;
-    `
+        </form>
+    `;
 }
 export{createFilterTemplate};

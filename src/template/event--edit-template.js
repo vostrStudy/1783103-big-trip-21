@@ -111,6 +111,6 @@ function createEditTemplate(){
                   </section>
                 </section>
               </form>
-            </li>;`  
+            </li>`;
 }
 export {createEditTemplate};
