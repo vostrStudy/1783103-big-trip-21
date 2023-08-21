@@ -1,9 +1,17 @@
 import {createElement} from '../render.js';
 import {createEditTemplate} from '../template/event--edit-template.js';
 
+// createEditTemplate (task)
+
+
 export default class EditView {
+
+  constructor({points}){
+    this.points = points;
+  }
+  
   getTemplate() {
-    return createEditTemplate;
+    return createEditTemplate(this.points);
   }
 
   getElement() {
@@ -14,6 +22,6 @@ export default class EditView {
   }
 
   removeElement(){
-    this.eement = null;
+    this.element = null;
   }
 }

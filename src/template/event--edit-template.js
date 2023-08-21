@@ -1,6 +1,18 @@
-function createEditTemplate(){
-  return`
-            <li class="trip-events__item">
+import { CITIES } from "../const.js";
+import { city } from "../mock/points.js";
+import { getRandomPoint } from "../mock/points.js";
+import { formatEventDate } from "../utils.js";
+
+
+
+function createEditTemplate(points){
+ const {destination, type} = points;
+
+  // const date = humanizeTaskDueDate(dueDate);
+
+  
+  return(
+            `<li class="trip-events__item">
                 <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
                   <div class="event__type-wrapper">
@@ -15,47 +27,47 @@ function createEditTemplate(){
                         <legend class="visually-hidden">Event type</legend>
 
                         <div class="event__type-item">
-                          <input id="event-type-taxi-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="taxi">
-                          <label class="event__type-label  event__type-label--taxi" for="event-type-taxi-1">Taxi</label>
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
+                          <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-bus-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus" checked>
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="bus" checked>
                           <label class="event__type-label  event__type-label--bus" for="event-type-bus-1">Bus</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-train-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="train">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="train">
                           <label class="event__type-label  event__type-label--train" for="event-type-train-1">Train</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-ship-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="ship">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="ship">
                           <label class="event__type-label  event__type-label--ship" for="event-type-ship-1">Ship</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-drive-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="drive">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="drive">
                           <label class="event__type-label  event__type-label--drive" for="event-type-drive-1">Drive</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-flight-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="flight">
                           <label class="event__type-label  event__type-label--flight" for="event-type-flight-1">Flight</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-check-in-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="check-in">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="check-in">
                           <label class="event__type-label  event__type-label--check-in" for="event-type-check-in-1">Check-in</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-sightseeing-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="sightseeing">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="sightseeing">
                           <label class="event__type-label  event__type-label--sightseeing" for="event-type-sightseeing-1">Sightseeing</label>
                         </div>
 
                         <div class="event__type-item">
-                          <input id="event-type-restaurant-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="restaurant">
+                          <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="restaurant">
                           <label class="event__type-label  event__type-label--restaurant" for="event-type-restaurant-1">Restaurant</label>
                         </div>
                       </fieldset>
@@ -66,11 +78,11 @@ function createEditTemplate(){
                     <label class="event__label  event__type-output" for="event-destination-1">
                       Bus
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Geneva" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value=${destination} list="destination-list-1">
                     <datalist id="destination-list-1">
-                      <option value="Amsterdam"></option>
-                      <option value="Geneva"></option>
-                      <option value="Chamonix"></option>
+                      <option value="${destination}"></option>
+                      <option value="${destination}"></option>
+                      <option value="${destination}"></option>
                     </datalist>
                   </div>
 
@@ -111,6 +123,8 @@ function createEditTemplate(){
                   </section>
                 </section>
               </form>
-            </li>`;
+            </li>`
+          );
 }
+
 export {createEditTemplate};
