@@ -1,60 +1,23 @@
-import {getRandomArrayElement} from '../utils.js';
-import {CITIES,TYPE} from '../const.js';
+import {getRandomArrayElement,getRandomNumber} from '../utils.js';
+import {CITIES,TYPE, UUID} from '../const.js';
 
-const mockPoints = [
-  {
-    basePrice: 100,
-    dateFrom: 11.01,
-    dateTo: 11.20,
-    destination: getRandomArrayElement(CITIES),
-    isFavorite: true,
-    offers: true,
-    type: getRandomArrayElement(TYPE),
-  },
-  {
-    basePrice: 100,
-    dateFrom: 11.01,
-    dateTo: 11.20,
-    destination: getRandomArrayElement(CITIES),
-    isFavorite: true,
-    offers: true,
-    type: getRandomArrayElement(TYPE),
-  },
-  {
-    basePrice: 100,
-    dateFrom: 11.01,
-    dateTo: 11.20,
-    destination: getRandomArrayElement(CITIES),
-    isFavorite: true,
-    offers: true,
-    type: getRandomArrayElement(TYPE),
-  },
-  {
-    basePrice: 100,
-    dateFrom: 11.01,
-    dateTo: 11.20,
-    destination: getRandomArrayElement(CITIES),
-    isFavorite: true,
-    offers: true,
-    type: getRandomArrayElement(TYPE),
-  },
-  {
-    basePrice: 100,
-    dateFrom: 11.01,
-    dateTo: 11.20,
-    destination: getRandomArrayElement(CITIES),
-    isFavorite: true,
-    offers: true,
-    type: getRandomArrayElement(TYPE),
-  },
-]
 
-function getRandomPoint() {
-    return getRandomArrayElement(mockPoints);
+function generatePoints (){
+  return {
+    id:UUID,
+    eventDate:"2019-03-18",
+    eventPrice: getRandomNumber(),
+    destination: getRandomArrayElement(CITIES),
+    dateFrom:"2019-03-18T10:30",
+    dateTo:"2019-03-18T11:00",
+    isFavorite: false,
+    type: getRandomArrayElement(TYPE),
+    offers:[
+      {
+        //Не знаю что добавлять сюда, из мок offers? 
+      }
+    ]
   }
+}
 
-console.log(mockPoints.type)
-
-console.log(mockPoints)
-
-  export{getRandomPoint}
+  export{generatePoints}

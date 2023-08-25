@@ -16,7 +16,21 @@ const DESCRIPTION = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. C
 const PRICE =[]
 
 const TYPE = [
-    'taxi', 'bus', 'rain', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant',
+    'Taxi',
+    'Bus', 
+    'Train', 
+    'Ship', 
+    'Drive', 
+    'Flight', 
+    'Check-in', 
+    'Sightseeing', 
+    'Restaurant',
 ]
 
-export {CITIES,TYPE,DURATION,PRICE,DESCRIPTION};
+const OFFERS = [
+    
+]
+
+const UUID= self.crypto.randomUUID();
+
+export {CITIES,TYPE,DURATION,PRICE,DESCRIPTION,UUID};

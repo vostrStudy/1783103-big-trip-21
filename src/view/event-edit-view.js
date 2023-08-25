@@ -1,17 +1,18 @@
 import {createElement} from '../render.js';
-import {createEditTemplate} from '../template/event--edit-template.js';
+import {createEditTemplate, BLANK_POINT } from '../template/event-edit-template.js';
 
 // createEditTemplate (task)
 
 
 export default class EditView {
 
-  constructor({points}){
-    this.points = points;
-  }
+    constructor({task = BLANK_POINT}) {
+      this.task = task;
+    }
+
   
   getTemplate() {
-    return createEditTemplate(this.points);
+    return createEditTemplate(this.task);
   }
 
   getElement() {
