@@ -3,11 +3,11 @@ import {getRandomArrayElement, getRandomNumber} from '../utils.js';
 
 
 function createDestinationTemplate(destination){
-    const {id,description,pictures,src,pictureDescription} = destination;
-   
-    const pictureSrc = pictures.map(pictures => pictures.src);
-    const pictureAlt = pictures.map(pictures =>pictures.pictureDescription); 
-    console.log(destination.id, pictureSrc)
+    const {pointDestination,description} = destination;
+   console.log(pointDestination)
+    const pictureSrc = 'pictures.map(picture => picture.src)'
+    const pictureAlt = 'pictures.map(picture =>pictures.pictureDescription) '
+    
     function createDestinationPhotoTempate(){
         return(
             `<img class="event__photo" src="${pictureSrc}" alt="${pictureAlt}">`

@@ -1,7 +1,32 @@
-function createOfferTemplate(offer){
+function createOfferTemplate(offers,type){
     
-const {offerPrice,id,title} =offer;
-console.log({offerPrice,id,title})
+// const{offerPrice,id,title} = offers
+
+
+
+
+console.log(offers)
+
+// for (let i = 0; i <= offers.length; i++){
+//   offers.forEach (offers => {
+//     const {title} = offers;
+//     console.log(title)
+
+//   })
+// }
+
+// for (let i = 0; i <= offers.length; i++){
+//   offers.forEach (offers => {
+//     const {title} = offers;
+//     console.log(title)
+
+//   })
+// }
+
+
+
+
+
 
 
     return(
@@ -14,7 +39,7 @@ console.log({offerPrice,id,title})
             <label class="event__offer-label" for="event-offer-luggage-1">
               <span class="event__offer-title">Add luggage</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">${offerPrice}</span>
+              <span class="event__offer-price">'{offerPrice}'</span>
             </label>
           </div>
 
@@ -23,7 +48,7 @@ console.log({offerPrice,id,title})
             <label class="event__offer-label" for="event-offer-comfort-1">
               <span class="event__offer-title">Switch to comfort class</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">${offerPrice}</span>
+              <span class="event__offer-price">'{offerPrice}'</span>
             </label>
           </div>
 
@@ -32,7 +57,7 @@ console.log({offerPrice,id,title})
             <label class="event__offer-label" for="event-offer-meal-1">
               <span class="event__offer-title">Add meal</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">${offerPrice}</span>
+              <span class="event__offer-price">'{offerPrice}'</span>
             </label>
           </div>
 
@@ -41,7 +66,7 @@ console.log({offerPrice,id,title})
             <label class="event__offer-label" for="event-offer-seats-1">
               <span class="event__offer-title">Choose seats</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">${offerPrice}</span>
+              <span class="event__offer-price">'{offerPrice}'</span>
             </label>
           </div>
 
@@ -50,7 +75,7 @@ console.log({offerPrice,id,title})
             <label class="event__offer-label" for="event-offer-train-1">
               <span class="event__offer-title">Travel by train</span>
               &plus;&euro;&nbsp;
-              <span class="event__offer-price">${offerPrice}</span>
+              <span class="event__offer-price">'{offerPrice}'</span>
             </label>
           </div>
         </div>

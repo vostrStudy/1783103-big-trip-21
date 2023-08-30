@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-const FULL_DATE_FORMAT = 'YY/MM/DDThh:mm'
+const FULL_DATE_FORMAT = 'YYYY-MM-DDTHH:mm'
 const DATE_FORMAT = 'DD MMM';
 const TIME_FORMAT = 'hh:mm';
 
@@ -34,7 +34,16 @@ function getEventDuration (dateFrom,dateTo) {
     const timeDifference = dayjs(dateTo).diff(dayjs(dateFrom),'minutes');
 }
 
+function getRandomInteger(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is exclusive and the minimum is inclusive
+  }
 
+function getRandomValue(items) {
+    return items[getRandomInteger(0, items.length - 1)]
+}
 
 export{getRandomArrayElement,getRandomNumber, formatEventDate,
-     formatEventTimeFrom, formatEventTimeTo, getEventDuration,getRandomNumberPhotos,formatFullDate};
+     formatEventTimeFrom, formatEventTimeTo, getEventDuration,
+     getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue};

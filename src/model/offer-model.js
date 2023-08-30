@@ -3,9 +3,12 @@ import { generateOffer } from '../mock/offer.js';
 const EVENT_COUNT = 5;
 
 export default class OfferModel {
-  offers = Array.from({length: EVENT_COUNT}, generateOffer);
+  constructor(service) {
+    this.service = service;
+    this.offers = this.service.getOffers();
+  }
 
-  getOffers() {
+  get() {
     return this.offers;
   }
 
@@ -14,20 +17,4 @@ export default class OfferModel {
     .find((offers) => offers.type === type).offers;
   }
 }
-
-// export default class OfferModel {
-//     constructor(service){
-//       this.service = service;
-//       this.offers = this.service.getOffers
-//     }
-
-
-//   get() {
-//     return this.offers;
-//   }
-
-  // getByType(type) {
-  //   return this.offers
-  //   findCacheDir((offer)=> offer.type === type).offers;
-  // }
-// }
+export{EVENT_COUNT};

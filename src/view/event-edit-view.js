@@ -6,13 +6,19 @@ import {createEditTemplate, BLANK_POINT } from '../template/event-edit-template.
 
 export default class EditView {
 
-    constructor({task = BLANK_POINT}) {
-      this.task = task;
+    constructor({point = BLANK_POINT, pointDestination, pointOffers}) {
+      this.point = point;
+      this.pointDestination = pointDestination;
+      this.pointOffers = pointOffers;
     }
 
   
   getTemplate() {
-    return createEditTemplate(this.task);
+    return createEditTemplate({
+      point: this.point,
+      pointDestination: this.pointDestination,
+      pointOffers:this.pointOffers
+    });
   }
 
   getElement() {

@@ -1,16 +1,16 @@
-import { generateDestination } from "../mock/destination.js";
-
-const DESTINATION_COUNT = 5;
-
 export default class DestinationModel {
-    destination = Array.from ({length:DESTINATION_COUNT}, generateDestination);
+  constructor(service) {
+    this.service= service;
+    this.destinations = this.service.getDestinations();
+  }
+  
 
-    getDestination() {
-    return this.destination;
+    get() {
+    return this.destinations;
     }
     getById(id){
-        return this.destination
-        .find((destination) => destination.id === id)
+        return this.destinations
+        .find((destinations) => destinations.id === id)
 
       }
 }

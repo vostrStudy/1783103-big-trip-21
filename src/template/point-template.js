@@ -1,16 +1,28 @@
 import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from "../utils.js";
+import { createOfferTemplate } from "./offer-template.js";
 
 
-function createEventTemplate(task){
-    const {destination, type,eventPrice,eventDate,dateFrom,dateTo,isFavorite,offers} = task;
-    const date= formatEventDate (eventDate);
-    const timeFrom = formatEventTimeFrom (dateFrom);
-    const timeTo = formatEventTimeTo (dateTo);
+
+
+
+function createPointTemplate({point,pointDestination,pointOffers,offers}){
+
+    
+    const {destination,isFavorite} = point;
+    
+    const pointType = point.type;
+    const pointPrice= point.eventPrice;
+    const date= formatEventDate (point.eventDate);
+    const timeFrom = formatEventTimeFrom (point.dateFrom);
+    const timeTo = formatEventTimeTo (point.dateTo);
     const duration= getEventDuration();
+    //почему не раотает eventduration?
     const favoriteClassName = isFavorite
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
-    console.log(offers)
+    // const pointDestinationPlace = pointDestination.map(pointDestination => pointDestination.name);
+    const offerTitle= pointOffers.map(pointOffers => pointOffers.title);
+    console.log(offerTitle,pointDestination,pointOffers)
     
   return(
 
@@ -19,9 +31,9 @@ function createEventTemplate(task){
         <div class="event">
         <time class="event__date" datetime="2019-03-18">${date}</time>
         <div class="event__type">
-            <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
+            <img class="event__type-icon" width="42" height="42" src="img/icons/${pointType}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">${type} ${destination}</h3>
+        <h3 class="event__title">${pointType} ${destination}</h3>
         <div class="event__schedule">
             <p class="event__time">
             <time class="event__start-time" datetime="2019-03-18T10:30">${timeFrom}</time>
@@ -31,16 +43,10 @@ function createEventTemplate(task){
             <p class="event__duration">${duration}</p>
         </div>
         <p class="event__price">
-            &euro;&nbsp;<span class="event__price-value">${eventPrice}</span>
+            &euro;&nbsp;<span class="event__price-value">${pointPrice}</span>
         </p>
         <h4 class="visually-hidden">Offers:</h4>
-        <ul class="event__selected-offers">
-            <li class="event__offer">
-            <span class="event__offer-title">Order Uber</span>
-            &plus;&euro;&nbsp;
-            <span class="event__offer-price">20</span>
-            </li>
-        </ul>
+        ${createOfferTemplate(pointOffers,offers)}
         <button class="event__favorite-btn ${favoriteClassName}" type="button">
             <span class="visually-hidden">Add to favorite</span>
             <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -53,4 +59,4 @@ function createEventTemplate(task){
         </div>
   </li>`);
 }
-export {createEventTemplate};
+export {createPointTemplate};
