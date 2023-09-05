@@ -8,3 +8,5 @@ export default class EventModel {
     return this.points;
   }
 }
+
+

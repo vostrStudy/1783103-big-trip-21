@@ -1,13 +1,13 @@
-import { UUID,} from "../const.js";
-import { getRandomNumber } from "../utils.js";
+// import { UUID,} from '../const.js';
+// import { getRandomNumber } from '../utils.js';
 
-function generateOffer(type){
-    return {
-        id: UUID,
-        title: `Offer ${type}`,
-        offerPrice: getRandomNumber(),
-    }
-}
+// function generateOffers(type){
+//   return {
+//     id: UUID,
+//     title: `Offer ${type}`,
+//     offerPrice: getRandomNumber(),
+//   };
+// }
 
-export {generateOffer};
+// export {generateOffers};
 

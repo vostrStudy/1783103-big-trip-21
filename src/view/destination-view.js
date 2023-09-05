@@ -2,11 +2,12 @@ import {createElement} from '../render.js';
 import {createDestinationTemplate} from '../template/destiation-template.js';
 
 export default class DestinationView {
-  constructor({destination}){
-    this.destination = destination;
+  
+  constructor({pointDestination}){
+    this.pointDestination = pointDestination;
   }
     getTemplate() {
-        return createDestinationTemplate(this.destination);
+        return createDestinationTemplate(this.pointDestination);
       }
     
       getElement(){

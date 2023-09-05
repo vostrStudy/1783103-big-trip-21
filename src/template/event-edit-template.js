@@ -1,8 +1,7 @@
-import { CITIES,TYPE,UUID } from "../const.js";
+import { CITIES,TYPE,UUID } from '../const.js';
 import {getRandomArrayElement,formatFullDate, getEventDuration} from '../utils.js';
-import { createDestinationTemplate } from "./destiation-template.js";
-import { createOfferTemplate } from "./offer-template.js";
-
+import { createDestinationTemplate } from './destiation-template.js';
+import { createOfferTemplate } from './offer-template.js';
 
 
 const BLANK_POINT = {
@@ -14,8 +13,8 @@ const BLANK_POINT = {
   dateTo:null,
   isFavorite: false,
   type: getRandomArrayElement(TYPE),
-  offers:[],
-}
+  offers: [] ,
+};
 
 function createEventTypeItemTemplate(type){
   return(
@@ -23,18 +22,19 @@ function createEventTypeItemTemplate(type){
     <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
     <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
   </div>`
-  )
+  );
 }
 
- function createEditTemplate({point, pointDestination, pointOffers, offers}){
+function createEditTemplate({point,pointDestination,pointOffers}){
 
-  const { type,destination, dateFrom,dateTo,eventPrice,eventDate} = point;
-  
+  const { destination,isFavorite,type,id,eventPrice, eventDate, dateFrom,dateTo,price,hasOffers,offers} = point;
+
   const eventTypeItem = createEventTypeItemTemplate(type);
-  const destinationOption = destination;
-  
+  console.log(point,destination)
+
+
   return(
-            `<li class="trip-events__item">
+    `<li class="trip-events__item">
             <form class="event event--edit" action="#" method="post">
               <header class="event__header">
                 <div class="event__type-wrapper">
@@ -50,34 +50,19 @@ function createEventTypeItemTemplate(type){
 
                       ${createEventTypeItemTemplate(type)}
 
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
-
-                      ${createEventTypeItemTemplate(type)}
                     </fieldset>
                   </div>
                 </div>
 
                 <div class="event__field-group  event__field-group--destination">
                   <label class="event__label  event__type-output" for="event-destination-1">
-                    Flight
+                    ${type}
                   </label>
-                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinationOption}" list="destination-list-1">
+                  <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination}" list="destination-list-1">
                   <datalist id="destination-list-1">
-                    <option value="${destinationOption}"></option>
-                    <option value="${destinationOption}"></option>
-                    <option value="${destinationOption}"></option>
+                    <option value="${destination}"></option>
+                    <option value="${destination}"></option>
+                    <option value="${destination}"></option>
                   </datalist>
                 </div>
 
@@ -101,12 +86,12 @@ function createEventTypeItemTemplate(type){
                 <button class="event__reset-btn" type="reset">Cancel</button>
               </header>
               <section class="event__details">
-                ${createOfferTemplate({pointOffers})}
+                ${createOfferTemplate({pointOffers,offers})}
                 ${createDestinationTemplate({pointDestination})}
 
             </form>
           </li>`
-          );
+  );
 }
 
 export {createEditTemplate,BLANK_POINT };

@@ -1,39 +1,36 @@
-import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from "../utils.js";
-import { createOfferTemplate } from "./offer-template.js";
+import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from '../utils.js';
+import { createOfferTemplate } from './offer-template.js';
 
 
+function createPointTemplate({point,pointDestination,pointOffers}){
 
 
+  const {destination,isFavorite,type,id,eventPrice, eventDate, dateFrom,dateTo,price,hasOffers,offers} = point;
 
-function createPointTemplate({point,pointDestination,pointOffers,offers}){
 
-    
-    const {destination,isFavorite} = point;
-    
-    const pointType = point.type;
-    const pointPrice= point.eventPrice;
-    const date= formatEventDate (point.eventDate);
-    const timeFrom = formatEventTimeFrom (point.dateFrom);
-    const timeTo = formatEventTimeTo (point.dateTo);
-    const duration= getEventDuration();
-    //почему не раотает eventduration?
-    const favoriteClassName = isFavorite
+  const date = formatEventDate (point.eventDate);
+  const timeFrom = formatEventTimeFrom (point.dateFrom);
+  const timeTo = formatEventTimeTo (point.dateTo);
+  const duration = getEventDuration();
+  //почему не раотает eventduration?
+  const favoriteClassName = isFavorite
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
     // const pointDestinationPlace = pointDestination.map(pointDestination => pointDestination.name);
-    const offerTitle= pointOffers.map(pointOffers => pointOffers.title);
-    console.log(offerTitle,pointDestination,pointOffers)
-    
+//   const offerTitle = pointOffers.map((pointOffers) => pointOffers.title);
+  console.log(destination,offers,point);
+  const offersByType = offers.find((offerByType) => offerByType.type === type);
+  console.log(offersByType)
   return(
 
-  `
+    `
     <li class="trip-events__item">
         <div class="event">
         <time class="event__date" datetime="2019-03-18">${date}</time>
         <div class="event__type">
-            <img class="event__type-icon" width="42" height="42" src="img/icons/${pointType}.png" alt="Event type icon">
+            <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">${pointType} ${destination}</h3>
+        <h3 class="event__title">${type} ${destination.name}</h3>
         <div class="event__schedule">
             <p class="event__time">
             <time class="event__start-time" datetime="2019-03-18T10:30">${timeFrom}</time>
@@ -43,10 +40,10 @@ function createPointTemplate({point,pointDestination,pointOffers,offers}){
             <p class="event__duration">${duration}</p>
         </div>
         <p class="event__price">
-            &euro;&nbsp;<span class="event__price-value">${pointPrice}</span>
+            &euro;&nbsp;<span class="event__price-value">${price}</span>
         </p>
         <h4 class="visually-hidden">Offers:</h4>
-        ${createOfferTemplate(pointOffers,offers)}
+        ${createOfferTemplate({pointOffers,offers})}
         <button class="event__favorite-btn ${favoriteClassName}" type="button">
             <span class="visually-hidden">Add to favorite</span>
             <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
