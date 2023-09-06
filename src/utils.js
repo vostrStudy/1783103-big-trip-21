@@ -44,6 +44,9 @@ function getRandomValue(items) {
   return items[getRandomInteger(0, items.length - 1)];
 }
 
+const randomBoolean = Math.random() >= 0.5;
+
+
 export{getRandomArrayElement,getRandomNumber, formatEventDate,
   formatEventTimeFrom, formatEventTimeTo, getEventDuration,
-  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue};
+  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue, randomBoolean};

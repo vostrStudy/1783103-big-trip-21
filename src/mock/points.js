@@ -1,4 +1,4 @@
-import {getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger} from '../utils.js';
+import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger} from '../utils.js';
 import {CITIES,TYPE, UUID} from '../const.js';
 import { POINT_COUNT,OFFER_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../const.js';
 
@@ -6,12 +6,12 @@ import { POINT_COUNT,OFFER_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../const.
 export default class MockService {
   destinations = [];
   offers = [];
-  points = [];
+  point = [];
 
   constructor(){
     this.destinations = this.generateDestination();
     this.offers = this.generateOffers();
-    this.points = this.generatePoints();
+    this.point = this.generatePoints();
   }
 
   getDestinations(){
@@ -23,7 +23,7 @@ export default class MockService {
   }
 
   getPoints(){
-    return this.points;
+    return this.point;
   }
 
   generateDestination() {
@@ -31,13 +31,14 @@ export default class MockService {
       id: UUID,
       description:DESCRIPTION,
       name:getRandomArrayElement(CITIES),
-      pictures:[{
-      src:`https://loremflickr.com/248/152?random=${getRandomNumber()}`,
-      pictureDescription:UUID,
-    }]
-    })
-    );
+      pictures: Array.from({length:DESTINATION_COUNT}, () => ({
+        src:`https://loremflickr.com/248/152?random=${getRandomNumber()}`,
+        pictureDescription:UUID,
+      })
+      )
+    }));
   }
+
 
   generateOffers() {
     return TYPE.map((type) => ({
@@ -61,10 +62,10 @@ export default class MockService {
     dateTo:'2019-03-18T11:00',
     price: getRandomNumber(),
     type: getRandomArrayElement(TYPE),
-    isFavorite: false,
+    isFavorite: randomBoolean,
     hasOffers: getRandomInteger(0,1),
     offers: this.offers.slice(getRandomInteger(0, OFFER_COUNT)),
-    destination: getRandomValue(this.destinations),
+    destinations: getRandomValue(this.destinations),
   }));
 };
 

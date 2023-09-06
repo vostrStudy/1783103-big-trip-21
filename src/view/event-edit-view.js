@@ -1,9 +1,9 @@
 import {createElement} from '../render.js';
-import {createEditTemplate, BLANK_POINT } from '../template/event-edit-template.js';
+import {createEditTemplate} from '../template/event-edit-template.js';
 
 export default class EditView {
 
-  constructor({point = BLANK_POINT, pointDestination, pointOffers}) {
+  constructor({point, pointDestination, pointOffers}) {
     this.point = point;
     this.pointDestination = pointDestination;
     this.pointOffers = pointOffers;

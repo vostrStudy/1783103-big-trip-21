@@ -1,14 +1,18 @@
 function createDestinationTemplate(pointDestination){
   const {destinations,description,pictures,name,id} = pointDestination;
+  const pictureSrc = pictures.map(pictures => pictures.src);
+  const pictureAlt = pictures.map(pictures => pictures.pictureDescription);
 
-
-  console.log(destinations);
+  const pictureArray = pictures.map((pictureArray) => 
+      `<img class="event__photo" src="${pictureSrc}" alt="${pictureAlt}">`
+    );
 
   function createDestinationPhotoTempate(){
     return(
-      `<img class="event__photo" src="${pictures}" alt="{destinationPicturesAlt}">`
+      pictureArray
     );
   }
+
   const destinationPhotoTemplate = createDestinationPhotoTempate();
   return(
     `<section class="event__section  event__section--destination">

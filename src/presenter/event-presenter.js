@@ -18,8 +18,9 @@ export default class EventPresenter {
     render(this.eventListComponent, this.eventContainer);
 
     render(new EditView({
-      points: this.points[0],
-      pointDestination: this.destination,
+      //changed points for point, therefore BLANK_POINTS doesn't apply//
+      point: this.points[0],
+      pointDestination: this.destinations,
       pointOffers: this.offers,
     }),
     this.eventComponent.getElement());
@@ -28,7 +29,7 @@ export default class EventPresenter {
       render (
         new PointView ({
           point ,
-          pointDestination: this.destination,
+          pointDestination: this.destinations,
           pointOffers: this.offers,
         }),
         this.eventComponent.getElement()
