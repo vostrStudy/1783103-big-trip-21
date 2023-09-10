@@ -1,7 +1,6 @@
-import { CITIES,TYPE,UUID } from '../const.js';
-import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, formatFullDate } from '../utils.js';
+import { formatFullDate } from '../utils.js';
 import { createDestinationTemplate } from './destiation-template.js';
-import { createOfferTemplate } from './offer-template.js';
+import { createOfferButtonTemplate } from './offer-button-template.js';
 
 function createEventTypeItemTemplate(type){
   return(
@@ -12,20 +11,12 @@ function createEventTypeItemTemplate(type){
   );
 }
 
-function createEditTemplate({point,pointDestination,pointOffers}){
+function createEditTemplate({point}){
 
-  const { destinations,isFavorite,type,id,eventPrice, eventDate, dateFrom,dateTo,price,hasOffers,offers} = point;
-
-  const eventTypeItem = createEventTypeItemTemplate(type);
-  console.log(offers)
+  const { destinations,type,price,offers} = point;
   const offersByType = offers.find((offerByType) => offerByType.type === type);
-  console.log(offersByType)
-
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
-  // const destinationById = destinations.find((destinationById) => destinationById.id === id);
-  // console.log(destinationById)
-
 
   return(
     `<li class="trip-events__item">
@@ -80,7 +71,13 @@ function createEditTemplate({point,pointDestination,pointOffers}){
                 <button class="event__reset-btn" type="reset">Cancel</button>
               </header>
               <section class="event__details">
-              ${createOfferTemplate(offersByType)}
+              <section class="event__section  event__section--offers">
+                  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+                  <div class="event__available-offers">
+                    ${createOfferButtonTemplate(offersByType)}
+                  </div>
+                </section>
+              </section>
                 ${createDestinationTemplate(destinations)}
 
             </form>

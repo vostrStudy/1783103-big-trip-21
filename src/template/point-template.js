@@ -1,34 +1,23 @@
 import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from '../utils.js';
+import { createOfferButtonTemplate } from './offer-button-template.js';
 import { createOfferTemplate } from './offer-template.js';
 
 
-function createPointTemplate({point,pointDestination,pointOffers}){
+function createPointTemplate({point}){
 
 
-  const {destinations,isFavorite,type,id,eventPrice, eventDate, dateFrom,dateTo,price,hasOffers,offers} = point;
+  const { destinations, isFavorite, type, eventDate, dateFrom, dateTo, price, offers} = point;
 
-
-  const date = formatEventDate (point.eventDate);
-  const timeFrom = formatEventTimeFrom (point.dateFrom);
-  const timeTo = formatEventTimeTo (point.dateTo);
-  const duration = getEventDuration();
-  //почему не раотает eventduration?
+  const date = formatEventDate (eventDate);
+  const timeFrom = formatEventTimeFrom (dateFrom);
+  const timeTo = formatEventTimeTo (dateTo);
+  const duration = getEventDuration(dateFrom, dateTo);
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
-    // const pointDestinationPlace = pointDestination.map(pointDestination => pointDestination.name);
-//   const offerTitle = pointOffers.map((pointOffers) => pointOffers.title);
-  console.log(destinations,offers,point);
   const offersByType = offers.find((offerByType) => offerByType.type === type);
-  console.log(offersByType)
-  
-
-//   const offersArray = pointOffers.offers
-//   const offersIdArray = offersArray.map(offersArray => offersArray.id);
-  
 
   return(
-
     `
     <li class="trip-events__item">
         <div class="event">
@@ -66,7 +55,3 @@ function createPointTemplate({point,pointDestination,pointOffers}){
   </li>`);
 }
 export {createPointTemplate};
-
-
-
-  

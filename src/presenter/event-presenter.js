@@ -10,28 +10,22 @@ export default class EventPresenter {
   constructor({eventContainer, eventModel }) {
     this.eventContainer = eventContainer;
     this.eventModel = eventModel;
-    this.points = [... eventModel.get()];
+    
   }
 
   init() {
+    this.points = this.eventModel.get();
     render(this.eventComponent, this.eventContainer);
     render(this.eventListComponent, this.eventContainer);
 
-    render(new EditView({
-      //changed points for point, therefore BLANK_POINTS doesn't apply//
-      point: this.points[0],
-      pointDestination: this.destinations,
-      pointOffers: this.offers,
-    }),
-    this.eventComponent.getElement());
+    render(
+      new EditView({point: this.points[0]}),
+      this.eventComponent.getElement()
+    );
 
     this.points.forEach((point) => {
       render (
-        new PointView ({
-          point ,
-          pointDestination: this.destinations,
-          pointOffers: this.offers,
-        }),
+        new PointView ({point}),
         this.eventComponent.getElement()
       );
     });

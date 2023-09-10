@@ -3,10 +3,8 @@ import {createPointTemplate} from '../template/point-template.js';
 
 export default class PointView {
 
-  constructor({point, pointDestination, pointOffers}){
+  constructor({ point }){
     this.point = point;
-    this.pointDestination = pointDestination;
-    this.pointOffers = pointOffers;
   }
 
   getTemplate() {

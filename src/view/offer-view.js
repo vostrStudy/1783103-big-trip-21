@@ -1,5 +1,5 @@
 import {createElement} from '../render.js';
-import {createOfferTemplate} from '../template/offer-template.js';
+import {createOfferButtonTemplate} from '../template/offer-button-template.js';
 
 export default class OfferView {
 
@@ -8,7 +8,7 @@ export default class OfferView {
   }
 
   getTemplate() {
-    return createOfferTemplate(this.offers);
+    return createOfferButtonTemplate(this.offers);
   }
 
   getElement(){

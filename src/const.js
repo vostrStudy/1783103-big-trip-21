@@ -1,4 +1,4 @@
-import { getRandomInteger, } from "./utils";
+import { getRandomInteger } from './utils';
 
 const CITIES = [
   'Tokyo',
@@ -29,16 +29,9 @@ const TYPE = [
   'Restaurant',
 ];
 
-const OFFERS = [
-
-];
-
 const UUID = self.crypto.randomUUID();
-const EVENT_COUNT = getRandomInteger(1,10);
-const DESTINATION_COUNT = getRandomInteger(1,10);
-const OFFER_COUNT = getRandomInteger(1,10);
-const POINT_COUNT = EVENT_COUNT;
+const DESTINATION_COUNT = getRandomInteger(1, 10);
+const POINT_COUNT = 4;
 
 export {CITIES,TYPE,DURATION,PRICE,
-  DESCRIPTION,UUID,DESTINATION_COUNT,
-  OFFER_COUNT, POINT_COUNT, EVENT_COUNT};
+  DESCRIPTION,UUID,DESTINATION_COUNT, POINT_COUNT};

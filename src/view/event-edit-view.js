@@ -2,7 +2,6 @@ import {createElement} from '../render.js';
 import {createEditTemplate} from '../template/event-edit-template.js';
 
 export default class EditView {
-
   constructor({point, pointDestination, pointOffers}) {
     this.point = point;
     this.pointDestination = pointDestination;

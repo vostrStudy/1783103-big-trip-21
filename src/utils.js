@@ -31,7 +31,7 @@ function formatEventTimeTo(dateTo) {
 }
 
 function getEventDuration (dateFrom,dateTo) {
-  const timeDifference = dayjs(dateTo).diff(dayjs(dateFrom),'minutes');
+  return dayjs(dateTo).diff(dayjs(dateFrom),'minutes');
 }
 
 function getRandomInteger(min, max) {
