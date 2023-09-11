@@ -5,6 +5,6 @@ function createOfferTemplate(offerItem) {
       &plus;&euro;&nbsp;
       <span class="event__offer-price">${item.offerPrice}</span>
       </li>`
-    )).join('');
-  }  
-  export {createOfferTemplate};
+  )).join('');
+}
+export {createOfferTemplate};

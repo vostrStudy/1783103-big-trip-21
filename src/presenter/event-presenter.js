@@ -10,7 +10,6 @@ export default class EventPresenter {
   constructor({eventContainer, eventModel }) {
     this.eventContainer = eventContainer;
     this.eventModel = eventModel;
-    
   }
 
   init() {

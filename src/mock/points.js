@@ -34,7 +34,7 @@ export default class MockService {
     }));
   }
 
-   generatePoints() {
+  generatePoints() {
     return Array.from({ length: POINT_COUNT }, () => ({
       id: UUID,
       eventDate: '2019-03-18',
