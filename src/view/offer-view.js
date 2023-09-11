@@ -1,9 +1,14 @@
 import {createElement} from '../render.js';
-import {createEventTemplate} from '../template/event-template.js';
+import {createOfferButtonTemplate} from '../template/offer-button-template.js';
 
-export default class EventView {
+export default class OfferView {
+
+  constructor({offers}){
+    this.offers = offers;
+  }
+
   getTemplate() {
-    return createEventTemplate();
+    return createOfferButtonTemplate(this.offers);
   }
 
   getElement(){
