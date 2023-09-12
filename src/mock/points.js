@@ -3,10 +3,10 @@ import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../
 
 
 export default class MockService {
-  points = [];
+  #points = [];
 
   constructor(){
-    this.points = this.generatePoints();
+    this.#points = this.generatePoints();
   }
 
   generateDestination(destinationAmount) {
@@ -53,6 +53,6 @@ export default class MockService {
   }
 
   getPoints(){
-    return this.points;
+    return this.#points;
   }
 }
