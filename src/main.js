@@ -1,6 +1,7 @@
 import { render } from './framework/render.js';
 import FilterView from '../src/view/filter-view.js';
 import SortView from '../src/view/sort-view.js';
+import { generateFilter } from './mock/filter.js';
 
 
 import EventPresenter from './presenter/event-presenter.js';
@@ -16,13 +17,14 @@ const tripEvents = pageMain.querySelector('.trip-events');
 const mockService = new MockService();
 const eventModel = new EventModel(mockService);
 
-
 const eventPresenter = new EventPresenter({
   eventContainer: tripEvents,
   eventModel,
 });
 
-render (new FilterView(),tripFilters);
+const filters = generateFilter(eventModel.events);
+
+render (new FilterView({filters}),tripFilters);
 render (new SortView(), tripEvents);
 
 

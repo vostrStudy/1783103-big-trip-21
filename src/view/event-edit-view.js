@@ -15,7 +15,11 @@ export default class EditView extends AbstractView {
     this.#handleSaveForm = onSaveForm;
 
     this.element.querySelector('.event__save-btn')
-      .addEventListener('click', this.#saveFormHandler);
+      .addEventListener('submit',this.#saveFormHandler);
+    this.element.querySelector('.event__reset-btn')
+      .addEventListener('click',this.#saveFormHandler);
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click',this.#saveFormHandler);
   }
 
   get template() {

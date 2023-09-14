@@ -17,16 +17,6 @@ export default class EventPresenter {
     this.#eventModel = eventModel;
   }
 
-  init() {
-    this.#points = this.#eventModel.get();
-    render(this.#eventComponent, this.#eventContainer);
-    render(this.#eventListComponent, this.#eventContainer);
-
-    this.#points.forEach((point) => {
-      this.#renderPoint(point);
-    });
-  }
-
   #renderPoint(point) {
 
     const escKeyDownHandler = (evt) => {
@@ -65,4 +55,15 @@ export default class EventPresenter {
 
     render(pointComponent, this.#eventComponent.element);
   }
+
+  init() {
+    this.#points = this.#eventModel.get();
+    render(this.#eventComponent, this.#eventContainer);
+    render(this.#eventListComponent, this.#eventContainer);
+
+    this.#points.forEach((point) => {
+      this.#renderPoint(point);
+    });
+  }
+
 }

@@ -1,5 +1,5 @@
-import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger} from '../utils.js';
-import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../const.js';
+import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger, generateRandomDate, getDateTo} from '../utils/utils.js';
+import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../utils/const.js';
 
 
 export default class MockService {
@@ -35,11 +35,16 @@ export default class MockService {
   }
 
   generatePoints() {
+  // for recieving the data from the server, need to delete the getter for the dateTo key//
     return Array.from({ length: POINT_COUNT }, () => ({
       id: UUID,
-      eventDate: '2019-03-18',
-      dateFrom: '2019-03-18T10:30',
-      dateTo: '2019-03-18T11:00',
+      eventDate: generateRandomDate(new Date(2023, 1, 1), new Date()),
+      get dateFrom(){
+        return this.eventDate;
+      },
+      get dateTo(){
+        return getDateTo(this.eventDate);
+      },
       price: getRandomNumber(),
       type: getRandomArrayElement(TYPE),
       isFavorite: randomBoolean,

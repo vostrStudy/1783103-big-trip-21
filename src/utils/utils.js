@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-const FULL_DATE_FORMAT = 'YYYY-MM-DDTHH:mm';
+const FULL_DATE_FORMAT = 'YY-MM-DDTHH:mm';
 const DATE_FORMAT = 'DD MMM';
-const TIME_FORMAT = 'hh:mm';
+const TIME_FORMAT = 'HH:mm';
 
 function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -46,7 +46,18 @@ function getRandomValue(items) {
 
 const randomBoolean = Math.random() >= 0.5;
 
+function generateRandomDate(from, to) {
+  return new Date(
+    from.getTime() +
+      Math.random() * (to.getTime() - from.getTime()),
+  );
+}
+//*source: https://bobbyhadz.com/blog/javascript-generate-random-date*//
+
+function getDateTo (date){
+  return dayjs(date).add(30,'minutes');
+}
 
 export{getRandomArrayElement,getRandomNumber, formatEventDate,
   formatEventTimeFrom, formatEventTimeTo, getEventDuration,
-  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue, randomBoolean};
+  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue, randomBoolean, generateRandomDate, getDateTo};
