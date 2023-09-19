@@ -29,7 +29,7 @@ const filterPresenter = new FilterPresenter({
 
 // const sort = generateSort(eventModel.events);
 
-// render (new SortView({sort}), tripEvents);
+// render (new SortView({items:this.#sortType}), tripEvents);
 
 
 eventPresenter.init();

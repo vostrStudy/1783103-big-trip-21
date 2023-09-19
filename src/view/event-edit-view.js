@@ -32,6 +32,6 @@ export default class EditView extends AbstractView {
 
   #saveFormHandler = (evt) => {
     evt.preventDefault();
-    this.#handleSaveForm();
+    this.#handleSaveForm(this.#point);
   };
 }

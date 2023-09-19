@@ -1,32 +1,62 @@
 import { render, replace, remove } from '../framework/render.js';
-import EditView from '../view/event-edit-view.js';
 import EventList from '../view/event-list-view.js';
-import PointView from '../view/point-view.js';
 import SortView from '../view/sort-view.js';
 import { SortType,enabledSortType } from '../utils/const.js';
+import PointPresenter from './point-presenter.js';
+import { updateItem } from '../utils/utils.js';
+import { sort } from '../utils/sort.js';
 
 export default class EventPresenter {
   #eventContainer = null;
   #eventModel = null;
   #sortComponent = null;
+  // #noPointComponent = new NoPointView();
 
   #currentSortType = SortType.DAY;
 
   #points = [];
 
-  #eventComponent = new EventList();
-  #eventListComponent = new EventList();
+  #pointPresenters = new Map();
 
+  #eventComponent = new EventList();
 
   constructor({eventContainer, eventModel }) {
     this.#eventContainer = eventContainer;
     this.#eventModel = eventModel;
   }
 
+
+  #renderPoint(point) {
+    const pointPresenter = new PointPresenter ({
+      pointListContainer: this.#eventComponent.element,
+      onDataChange: this.#handlePointsChange,
+      onModeChange: this.#handleModeChange,
+    });
+
+    pointPresenter.init(point);
+    //*finding the object by id in prerspective// set- stores objects of unique values of any type
+    this.#pointPresenters.set(point.id,pointPresenter);
+  }
+
+  // #renderNoPoint() {
+  //   render(this.#noPointComponent, this.#eventComponent.element, RenderPosition.AFTERBEGIN);
+  // }
+
+  #handlePointsChange = (updatedPoint) => {
+    //*update the changes
+    this.#points = updateItem(this.#points, updatedPoint);
+    //*initialize presenter with updated changes
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  };
+
+  #handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
+
   #renderSort = () => {
     const prevSortComponent = this.#sortComponent;
 
-    // формирует объект SortType на основе SortType from const.js//
+    //* формирует объект SortType на основе SortType from const.js//
     const sortTypes = Object.values(SortType).map((type) => ({
       type,
       isChecked: type === this.#currentSortType,
@@ -35,7 +65,7 @@ export default class EventPresenter {
 
     this.#sortComponent = new SortView({
       items: sortTypes,
-      //колбэк при смене сортировки//
+      //*колбэк при смене сортировки//
       onItemChange: this.#sortTypeChangeHandler
     });
 
@@ -45,17 +75,19 @@ export default class EventPresenter {
     } else {
       render (this.#sortComponent, this.#eventContainer);
     }
+
   };
 
-  // - Сортируем точки sortType = (evt.target.dataset.item). запоминаем current type, then sort it afterwards;
+  //* - Сортируем точки sortType = (evt.target.dataset.item). запоминаем current type, then sort it afterwards;
   #sortPoints = (sortType) =>{
     this.#currentSortType = sortType;
     this.#points = sort[this.#currentSortType](this.points);
   };
 
-  #clearPoints = () => {
-
-  };
+  #clearPoints(){
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
+  }
 
   #renderPoints = () => {
     this.#points.forEach((point) => this.#renderPoint(point)
@@ -63,6 +95,7 @@ export default class EventPresenter {
   };
 
   #sortTypeChangeHandler = (sortType) => {
+
     // - Сортируем точки
     this.#sortPoints(sortType);
     // - Очищаем список
@@ -72,53 +105,12 @@ export default class EventPresenter {
     this.#renderPoints();
   };
 
-  #renderPoint(point) {
-
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceEditForm();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    };
-
-    //*pointComponent- точки маршрута*//
-    const pointComponent = new PointView({
-      point,
-      onPointRollClick: () => {
-        replacePointForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      }
-    });
-
-    //*pointEditComponent- форма редактирования точек маршрута*//
-    const pointEditComponent = new EditView ({
-      point,
-      onSaveForm: () => {
-        replaceEditForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      }
-    });
-
-    function replacePointForm() {
-      replace(pointEditComponent, pointComponent);
-    }
-
-    function replaceEditForm(){
-      replace (pointComponent, pointEditComponent);
-    }
-
-    render(pointComponent, this.#eventComponent.element);
-  }
-
   init() {
     this.#points = this.#eventModel.get();
     render(this.#eventComponent, this.#eventContainer);
-    render(this.#eventListComponent, this.#eventContainer);
 
     this.#points.forEach((point) => {
       this.#renderPoint(point);
     });
   }
-
 }

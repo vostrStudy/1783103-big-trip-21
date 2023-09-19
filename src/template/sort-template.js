@@ -15,7 +15,6 @@ function createSortItemTemplate ({type, isChecked,isDisabled}) {
   `;
 }
 
-
 function createSortTemplate(sortItems){
 
   return`
@@ -24,5 +23,3 @@ ${sortItems.map((sortItem) => createSortItemTemplate(sortItem).join(''))}
 </form>`;
 }
 export {createSortTemplate};
-
-

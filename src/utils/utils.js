@@ -81,8 +81,11 @@ function sortTimeDown(dateFrom,dateTo) {
   return weight ?? dayjs(dateTo).diff(dayjs(dateFrom));
 }
 
+function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
+}
 
 export{getRandomArrayElement,getRandomNumber, formatEventDate,
   formatEventTimeFrom, formatEventTimeTo, getEventDuration,
   getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue,
-  randomBoolean, generateRandomDate, getDateTo,sortTimeDown };
+  randomBoolean, generateRandomDate, getDateTo,sortTimeDown, updateItem };

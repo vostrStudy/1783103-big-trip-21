@@ -52,9 +52,14 @@ const enabledSortType = {
   [SortType.OFFERS]: false,
 };
 
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
+
 const UUID = self.crypto.randomUUID();
 const DESTINATION_COUNT = getRandomInteger(1, 10);
 const POINT_COUNT = 4;
 
 export {CITIES,TYPE,DURATION,PRICE,
-  DESCRIPTION,UUID,DESTINATION_COUNT, POINT_COUNT, FilterType,SortType, enabledSortType};
+  DESCRIPTION,UUID,DESTINATION_COUNT, POINT_COUNT, FilterType,SortType, enabledSortType, Mode};
