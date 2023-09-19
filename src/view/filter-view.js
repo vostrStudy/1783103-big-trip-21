@@ -1,28 +1,10 @@
-import AbstractView from '../framework/view/abstract-view.js';
+// import AbstractView from '../framework/view/abstract-view.js';
 import {createFilterTemplate} from '../template/filter-template.js';
+import RadioListView from './radio-list-view.js';
 
-export default class FilterView extends AbstractView{
-  #filters = null;
-  // #handleFilterClick = null;
-
-  constructor ({filters}) {
-    super();
-    this.#filters = filters;
-    // this.#handleFilterClick = handleFilterClick;
-
-    // this.element.querySelectorAll('.trip-filters__filter-label')
-    //   .forEach ((tripFilters) => {
-    //     tripFilters.addEventListener('click', this.#filterClickHandler);
-    //   });
-  }
+export default class FilterView extends RadioListView{
 
   get template() {
-    return createFilterTemplate(this.#filters);
+    return createFilterTemplate(this._items);
   }
-
-  // #filterClickHandler = (evt) => {
-  //   evt.preventDefault();
-  // console.log('yes');
-  // this.#handleFilterClick;
-  // };
 }

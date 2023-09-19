@@ -1,10 +1,10 @@
-import { render } from './framework/render.js';
-import FilterView from '../src/view/filter-view.js';
-import SortView from '../src/view/sort-view.js';
-import { generateFilter } from './mock/filter.js';
+// import { render } from './framework/render.js';
+// import SortView from '../src/view/sort-view.js';
+// import { generateSort } from './mock/sort.js';
 
 
 import EventPresenter from './presenter/event-presenter.js';
+import FilterPresenter from './presenter/filter-presenter.js';
 import EventModel from '../src/model/event-model.js';
 import MockService from './mock/points.js';
 
@@ -22,10 +22,15 @@ const eventPresenter = new EventPresenter({
   eventModel,
 });
 
-const filters = generateFilter(eventModel.events);
+const filterPresenter = new FilterPresenter({
+  container: tripFilters,
+  eventModel
+});
 
-render (new FilterView({filters}),tripFilters);
-render (new SortView(), tripEvents);
+// const sort = generateSort(eventModel.events);
+
+// render (new SortView({sort}), tripEvents);
 
 
 eventPresenter.init();
+filterPresenter.init();

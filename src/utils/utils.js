@@ -58,6 +58,31 @@ function getDateTo (date){
   return dayjs(date).add(30,'minutes');
 }
 
+function getWeightForNullDate(dateA, dateB) {
+  if (dateA === null && dateB === null) {
+    return 0;
+  }
+
+  if (dateA === null) {
+    return 1;
+  }
+
+  if (dateB === null) {
+    return -1;
+  }
+
+  return null;
+}
+
+
+function sortTimeDown(dateFrom,dateTo) {
+  const weight = getWeightForNullDate(dateFrom, dateTo);
+
+  return weight ?? dayjs(dateTo).diff(dayjs(dateFrom));
+}
+
+
 export{getRandomArrayElement,getRandomNumber, formatEventDate,
   formatEventTimeFrom, formatEventTimeTo, getEventDuration,
-  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue, randomBoolean, generateRandomDate, getDateTo};
+  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue,
+  randomBoolean, generateRandomDate, getDateTo,sortTimeDown };

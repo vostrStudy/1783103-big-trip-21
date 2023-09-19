@@ -3,7 +3,7 @@ import { generateRandomDate } from './utils.js';
 import dayjs from 'dayjs';
 
 const currentDate = generateRandomDate(new Date(2023, 1, 1), new Date());
-console.log(currentDate);
+// console.log(currentDate);
 
 function isPast(dateTo) {
   return dateTo && dayjs(currentDate).isAfter(dateTo, 'minutes');
@@ -18,7 +18,6 @@ function isFuture (dateFrom) {
   return dateFrom && dayjs(currentDate).isBefore (dateFrom, 'minutes');
 }
 
-// console.log(points)
 const filter = {
   [FilterType.EVERYTHING]: (points) => points,
   [FilterType.FUTURE]: (points) => points.filter((point) => isFuture(point.dateFrom)),
