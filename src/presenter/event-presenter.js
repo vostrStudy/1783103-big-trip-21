@@ -1,30 +1,32 @@
-import { render, replace, remove } from '../framework/render.js';
+import { render,RenderPosition} from '../framework/render.js';
 import EventList from '../view/event-list-view.js';
 import SortView from '../view/sort-view.js';
-import { SortType,enabledSortType } from '../utils/const.js';
+import NoPointView from '../view/no-point-view.js';
+import { SortType,enabledSortType, FilterType } from '../utils/const.js';
 import PointPresenter from './point-presenter.js';
-import { updateItem } from '../utils/utils.js';
+import { updateItem,sortByPrice,sortByTime } from '../utils/utils.js';
 import { sort } from '../utils/sort.js';
 
 export default class EventPresenter {
   #eventContainer = null;
   #eventModel = null;
   #sortComponent = null;
-  // #noPointComponent = new NoPointView();
+  #noPointComponent = null;
+  #eventComponent = null;
+  #sourcedBoardPoints = [];
 
   #currentSortType = SortType.DAY;
+  #filterType = FilterType.EVERYTHING;
 
   #points = [];
 
   #pointPresenters = new Map();
 
-  #eventComponent = new EventList();
-
   constructor({eventContainer, eventModel }) {
     this.#eventContainer = eventContainer;
     this.#eventModel = eventModel;
+    this.#points = sort[SortType.DAY](this.#eventModel.get());
   }
-
 
   #renderPoint(point) {
     const pointPresenter = new PointPresenter ({
@@ -38,13 +40,17 @@ export default class EventPresenter {
     this.#pointPresenters.set(point.id,pointPresenter);
   }
 
-  // #renderNoPoint() {
-  //   render(this.#noPointComponent, this.#eventComponent.element, RenderPosition.AFTERBEGIN);
-  // }
+  #renderNoPoint() {
+    this.#noPointComponent = new NoPointView({
+      filterType: this.#filterType
+    });
+    render(this.#noPointComponent, this.#eventComponent.element, RenderPosition.AFTERBEGIN);
+  }
 
   #handlePointsChange = (updatedPoint) => {
     //*update the changes
     this.#points = updateItem(this.#points, updatedPoint);
+    this.#sourcedBoardPoints = updateItem(this.#sourcedBoardPoints , updatedPoint);
     //*initialize presenter with updated changes
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   };
@@ -53,9 +59,8 @@ export default class EventPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
   };
 
-  #renderSort = () => {
-    const prevSortComponent = this.#sortComponent;
 
+  #renderSort = () => {
     //* формирует объект SortType на основе SortType from const.js//
     const sortTypes = Object.values(SortType).map((type) => ({
       type,
@@ -69,19 +74,27 @@ export default class EventPresenter {
       onItemChange: this.#sortTypeChangeHandler
     });
 
-    if(prevSortComponent) {
-      replace (this.#sortComponent, prevSortComponent);
-      remove (prevSortComponent);
-    } else {
-      render (this.#sortComponent, this.#eventContainer);
-    }
+    render (this.#sortComponent, this.#eventContainer);
 
   };
 
   //* - Сортируем точки sortType = (evt.target.dataset.item). запоминаем current type, then sort it afterwards;
   #sortPoints = (sortType) =>{
+
+    switch (sortType) {
+      case SortType.PRICE:
+        this.#points.sort(sortByPrice);
+        break;
+      case SortType.TIME:
+        this.#points.sort(sortByTime);
+        break;
+      default:
+        // 3. А когда пользователь захочет "вернуть всё, как было",
+        // мы просто запишем в исходный массив
+        this.#points = [...this.#sourcedBoardPoints];
+    }
     this.#currentSortType = sortType;
-    this.#points = sort[this.#currentSortType](this.points);
+    this.#points = sort[this.#currentSortType](this.#points);
   };
 
   #clearPoints(){
@@ -95,7 +108,9 @@ export default class EventPresenter {
   };
 
   #sortTypeChangeHandler = (sortType) => {
-
+    if (this.#currentSortType === sortType) {
+      return;
+    }
     // - Сортируем точки
     this.#sortPoints(sortType);
     // - Очищаем список
@@ -105,12 +120,19 @@ export default class EventPresenter {
     this.#renderPoints();
   };
 
-  init() {
-    this.#points = this.#eventModel.get();
+  #renderPointsContainer = () => {
+    this.#eventComponent = new EventList();
     render(this.#eventComponent, this.#eventContainer);
+  };
 
-    this.#points.forEach((point) => {
-      this.#renderPoint(point);
-    });
+  #renderBoard = () => {
+    this.#renderSort();
+    this.#renderPointsContainer();
+    this.#renderPoints();
+  };
+
+  init() {
+    this.#renderBoard();
+    this.#sourcedBoardPoints = this.#eventModel.get();
   }
 }

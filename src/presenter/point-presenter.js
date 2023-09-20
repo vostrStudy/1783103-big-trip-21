@@ -66,40 +66,39 @@ export default class PointPresenter {
 
   resetView() {
     if (this.#mode !== Mode.DEFAULT) {
-      this.#replaceEditForm();
+      this.#replaceEditToPoint();
     }
   }
 
-  #replacePointForm(){
+  #replacePointToEdit = () => {
     replace(this.#pointEditComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#escKeyDownHandler);
     this.#handleModeChange();
     this.#mode = Mode.EDITING;
-  }
+  };
 
-  #replaceEditForm(){
+  #replaceEditToPoint = () => {
     replace (this.#pointComponent, this.#pointEditComponent);
-    document.addEventListener('keydown', this.#escKeyDownHandler);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#mode = Mode.DEFAULT;
-  }
+  };
 
   #handleFavoriteClick = () => {
     this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
   };
 
   #handleOnPointRollClick = () => {
-    this.#replacePointForm();
+    this.#replacePointToEdit();
   };
 
   #handleOnSaveForm = () => {
-    this.#replaceEditForm();
+    this.#replaceEditToPoint();
   };
 
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      this.#replaceEditForm();
+      this.#replaceEditToPoint();
     }
   };
 }

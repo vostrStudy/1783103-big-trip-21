@@ -1,4 +1,3 @@
-// import AbstractView from '../framework/view/abstract-view.js';
 import {createFilterTemplate} from '../template/filter-template.js';
 import RadioListView from './radio-list-view.js';
 

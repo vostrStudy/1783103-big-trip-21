@@ -19,7 +19,7 @@ function createSortTemplate(sortItems){
 
   return`
 <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-${sortItems.map((sortItem) => createSortItemTemplate(sortItem).join(''))}
+${sortItems.map((sortItem) => createSortItemTemplate(sortItem)).join('')}
 </form>`;
 }
 export {createSortTemplate};
