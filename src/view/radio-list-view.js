@@ -15,7 +15,7 @@ export default class RadioListView extends AbstractView {
 
   #itemChangeHandler = (evt) => {
     evt.preventDefault();
-    this.handleItemChange?.(evt.target.dataset.item);
+    this._handleItemsChange?.(evt.target.dataset.item);
     //* если не вызвали обработчик, то ошибки не будет// optional chaining.
   };
 }

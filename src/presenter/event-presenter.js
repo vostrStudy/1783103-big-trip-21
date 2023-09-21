@@ -25,7 +25,7 @@ export default class EventPresenter {
   constructor({eventContainer, eventModel }) {
     this.#eventContainer = eventContainer;
     this.#eventModel = eventModel;
-    this.#points = sort[SortType.DAY](this.#eventModel.get());
+    this.#points = sort[this.#currentSortType](this.#eventModel.get());
   }
 
   #renderPoint(point) {
@@ -116,7 +116,6 @@ export default class EventPresenter {
     // - Очищаем список
     this.#clearPoints();
     // - Рендерим список заново
-    this.#renderSort();
     this.#renderPoints();
   };
 

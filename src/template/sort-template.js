@@ -10,7 +10,7 @@ function createSortItemTemplate ({type, isChecked,isDisabled}) {
   data-item = "${type}" 
     ${isChecked ? 'checked' : ''}
     ${isDisabled ? 'disabled' : ''}>
-  <label class="trip-sort__btn" for="sort-${type} ">${type} </label>
+  <label class="trip-sort__btn" for="sort-${type}">${type} </label>
 </div>
   `;
 }

@@ -11,7 +11,7 @@ export default class MockService {
 
   generateDestination(destinationAmount) {
     return Array.from({ length: destinationAmount }, () => ({
-      id: UUID,
+      id: self.crypto.randomUUID(),
       description:DESCRIPTION,
       name:getRandomArrayElement(CITIES),
       pictures: Array.from({length:DESTINATION_COUNT}, () => ({
@@ -26,7 +26,7 @@ export default class MockService {
     return TYPE.map((type) => ({
       type,
       offers : Array.from({length: offersAmount}, () => ({
-        id: UUID,
+        id: self.crypto.randomUUID(),
         title: `Offer ${type}`,
         offerPrice: getRandomNumber(),
       })
@@ -37,7 +37,7 @@ export default class MockService {
   generatePoints() {
   // for recieving the data from the server, need to delete the getter for the dateTo key//
     return Array.from({ length: POINT_COUNT }, () => ({
-      id: UUID,
+      id: self.crypto.randomUUID(),
       eventDate: generateRandomDate(new Date(2023, 1, 1), new Date()),
       get dateFrom(){
         return this.eventDate;
