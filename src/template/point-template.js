@@ -1,4 +1,4 @@
-import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from '../utils.js';
+import { formatEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from '../utils/utils.js';
 import { createOfferTemplate } from './offer-template.js';
 
 

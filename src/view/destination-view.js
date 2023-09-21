@@ -1,24 +1,15 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {createDestinationTemplate} from '../template/destiation-template.js';
 
-export default class DestinationView {
+export default class DestinationView extends AbstractView{
+  #pointDestination = null;
 
   constructor({pointDestination}){
-    this.pointDestination = pointDestination;
+    super();
+    this.#pointDestination = pointDestination;
   }
 
-  getTemplate(){
-    return createDestinationTemplate(this.pointDestination);
-  }
-
-  getElement(){
-    if(!this.element){
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement(){
-    this.element = null;
+  get template(){
+    return createDestinationTemplate(this.#pointDestination);
   }
 }

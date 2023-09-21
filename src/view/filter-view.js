@@ -1,19 +1,9 @@
-import {createElement} from '../render.js';
 import {createFilterTemplate} from '../template/filter-template.js';
+import RadioListView from './radio-list-view.js';
 
-export default class FilterView {
-  getTemplate() {
-    return createFilterTemplate();
-  }
+export default class FilterView extends RadioListView{
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
+  get template() {
+    return createFilterTemplate(this._items);
   }
 }

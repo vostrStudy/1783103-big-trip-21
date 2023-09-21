@@ -1,19 +1,9 @@
-import {createElement} from '../render.js';
+import RadioListView from './radio-list-view.js';
 import {createSortTemplate} from '../template/sort-template.js';
 
-export default class SortView {
-  getTemplate(){
-    return createSortTemplate();
-  }
+export default class SortView extends RadioListView{
 
-  getElement() {
-    if(!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
+  get template() {
+    return createSortTemplate(this._items);
   }
 }
