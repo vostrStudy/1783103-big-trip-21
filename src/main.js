@@ -1,8 +1,3 @@
-// import { render } from './framework/render.js';
-// import SortView from '../src/view/sort-view.js';
-// import { generateSort } from './mock/sort.js';
-
-
 import EventPresenter from './presenter/event-presenter.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import EventModel from '../src/model/event-model.js';
@@ -26,11 +21,6 @@ const filterPresenter = new FilterPresenter({
   container: tripFilters,
   eventModel
 });
-
-// const sort = generateSort(eventModel.events);
-
-// render (new SortView({sort}), tripEvents);
-
 
 eventPresenter.init();
 filterPresenter.init();

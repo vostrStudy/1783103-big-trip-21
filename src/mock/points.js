@@ -1,4 +1,4 @@
-import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger, generateRandomDate, getDateTo} from '../utils/utils.js';
+import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger, generateRandomDate} from '../utils/utils.js';
 import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../utils/const.js';
 
 
@@ -35,16 +35,11 @@ export default class MockService {
   }
 
   generatePoints() {
-  // for recieving the data from the server, need to delete the getter for the dateTo key//
     return Array.from({ length: POINT_COUNT }, () => ({
       id: self.crypto.randomUUID(),
       eventDate: generateRandomDate(new Date(2023, 1, 1), new Date()),
-      get dateFrom(){
-        return this.eventDate;
-      },
-      get dateTo(){
-        return getDateTo(this.eventDate);
-      },
+      dateFrom: generateRandomDate(new Date(2023, 1, 1), new Date()),
+      dateTo: generateRandomDate(new Date(2023, 1, 1), new Date()),
       price: getRandomNumber(),
       type: getRandomArrayElement(TYPE),
       isFavorite: randomBoolean,

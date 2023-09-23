@@ -1,18 +1,30 @@
 import { formatFullDate } from '../utils/utils.js';
 import { createDestinationTemplate } from './destiation-template.js';
 import { createOfferButtonTemplate } from './offer-button-template.js';
+import { TYPE, CITIES } from '../utils/const.js';
 
-function createEventTypeItemTemplate(type){
-  return(
+function createEventTypeItemTemplate(){
+  return TYPE.map((type) => (
     `<div class="event__type-item">
-      <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
-      <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
-    </div>`
-  );
+         <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
+         <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
+      </div>`
+  )).join('');
+
 }
 
-function createEditTemplate({point}){
+function createDestinationItemTemplate(){
+  return CITIES.map((destinations) => (
+    `
+    <option value="${destinations}"></option>
+    `
+  )).join('');
+}
 
+
+function createEditTemplate({state}){
+  const point = state;
+  console.log(state.destinations)
   const { destinations,type,price,offers} = point;
   const offersByType = offers.find((offerByType) => offerByType.type === type);
   const timeFrom = formatFullDate (point.dateFrom);
@@ -32,7 +44,7 @@ function createEditTemplate({point}){
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-              ${createEventTypeItemTemplate(type)}
+              ${createEventTypeItemTemplate(point)}
             </fieldset>
           </div>
         </div>
@@ -43,9 +55,7 @@ function createEditTemplate({point}){
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinations.name}" list="destination-list-1">
           <datalist id="destination-list-1">
-          <option value="${destinations.name}"></option>
-          <option value="${destinations.name}"></option>
-          <option value="${destinations.name}"></option>
+          ${createDestinationItemTemplate(destinations)}
           </datalist>
         </div>
 
