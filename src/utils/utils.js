@@ -41,7 +41,7 @@ function getRandomInteger(min, max) {
 }
 
 function getRandomValue(items) {
-  return items[getRandomInteger(0, items.length - 1)];
+  return items[getRandomInteger(0, items.length)];
 }
 
 const randomBoolean = Math.random() >= 0.5;

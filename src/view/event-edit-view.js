@@ -29,17 +29,18 @@ export default class EditView extends AbstractStatefulView {
     return createEditTemplate({
       state: this._state,
       pointDestination: this.#pointDestination,
-      pointOffers:this.#pointOffers,
+      pointOffers : this.#pointOffers,
     });
   }
 
   //check why in retrospective there is a n arrow function and slightly different value//
-  reset = (point) => this.updateElement({point});
-  // reset(point) {
-  //   this.updateElement(
-  //     EditView.parsePointToState(point),
-  //   );
-  // }
+  // reset = (point) => this.updateElement({point});
+  reset(point) {
+    this.updateElement(
+      EditView.parsePointToState(point),
+    );
+  }
+
   removeElement = () => {
     super.removeElement();
     if (this.#datepickerFrom){
@@ -77,17 +78,22 @@ export default class EditView extends AbstractStatefulView {
 
   #eventTypeChangeHandler = (evt) => {
 
+    const offers = this.#pointOffers.filter((offer) => offer.type === evt.target.value);
+
     this.updateElement({
-      point: {
-        ...this._state.point,
+      points: {
+        ...this._state.points,
         type: evt.target.type,
-        offers: this.#pointOffers.get(evt.target.type)
+        offers,
       }
+  
     });
+
   };
 
 
   #eventDestinationChangeHandler = (evt) => {
+
     const selectedDestination = this.#pointDestination
       .find((destination) => destination.name === evt.target.value);
 

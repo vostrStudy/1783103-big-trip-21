@@ -1,11 +1,12 @@
 import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger, generateRandomDate} from '../utils/utils.js';
 import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../utils/const.js';
+import Observable from '../framework/observable.js';
 
-
-export default class MockService {
+export default class MockService extends Observable {
   #points = [];
 
   constructor(){
+    super();
     this.#points = this.generatePoints();
   }
 
@@ -44,7 +45,7 @@ export default class MockService {
       type: getRandomArrayElement(TYPE),
       isFavorite: randomBoolean,
       offers: this.generateOffers(
-        getRandomInteger(0, 2),
+        getRandomInteger(0, 5),
       ),
       destinations: getRandomValue(
         this.generateDestination(3),
@@ -52,7 +53,49 @@ export default class MockService {
     }));
   }
 
-  getPoints(){
+
+  getPoints (){
     return this.#points;
+  }
+
+
+  updatePoint(updateType, update) {
+    const index = this.#points.findIndex((point) => point.id === update.id);
+
+    if (index === -1) {
+      throw new Error('Can\'t update unexisting point');
+    }
+
+    this.#points = [
+      ...this.#points.slice(0, index),
+      update,
+      ...this.#points.slice(index + 1),
+    ];
+
+    this._notify(updateType, update);
+  }
+
+  addPoint(updateType, update) {
+    this.#points = [
+      update,
+      ...this.#points,
+    ];
+
+    this._notify(updateType, update);
+  }
+
+  deletePoint(updateType, update) {
+    const index = this.#points.findIndex((point) => point.id === update.id);
+
+    if (index === -1) {
+      throw new Error('Can\'t delete unexisting point');
+    }
+
+    this.#points = [
+      ...this.#points.slice(0, index),
+      ...this.#points.slice(index + 1),
+    ];
+
+    this._notify(updateType);
   }
 }

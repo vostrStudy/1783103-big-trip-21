@@ -57,9 +57,24 @@ const Mode = {
   EDITING: 'EDITING',
 };
 
+const UserAction = {
+  UPDATE_TASK: 'UPDATE_TASK',
+  ADD_TASK: 'ADD_TASK',
+  DELETE_TASK: 'DELETE_TASK',
+};
+
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+};
+
 const UUID = self.crypto.randomUUID();
 const DESTINATION_COUNT = getRandomInteger(1, 10);
 const POINT_COUNT = 4;
 
 export {CITIES,TYPE,DURATION,PRICE,
-  DESCRIPTION,UUID,DESTINATION_COUNT, POINT_COUNT, FilterType,SortType, enabledSortType, Mode};
+  DESCRIPTION,UUID,DESTINATION_COUNT,
+  POINT_COUNT, FilterType,SortType,
+  enabledSortType, Mode,
+  UserAction, UpdateType};

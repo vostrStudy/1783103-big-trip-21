@@ -37,9 +37,13 @@ export default class PointPresenter {
     });
 
     this.#pointEditComponent = new EditView ({
+
       point: this.#point,
+      pointOffers: this.#point.offers,
+      pointDestination: this.#point.destinations,
       onSaveForm: this.#handleOnSaveForm,
     });
+
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
       render(this.#pointComponent, this.#pointListContainer);
@@ -99,6 +103,7 @@ export default class PointPresenter {
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
+      this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
     }
   };
