@@ -79,14 +79,14 @@ export default class EditView extends AbstractStatefulView {
   #eventTypeChangeHandler = (evt) => {
 
     const offers = this.#pointOffers.filter((offer) => offer.type === evt.target.value);
-
+    this.#pointOffers = offers;
     this.updateElement({
       points: {
         ...this._state.points,
         type: evt.target.type,
         offers,
       }
-  
+
     });
 
   };

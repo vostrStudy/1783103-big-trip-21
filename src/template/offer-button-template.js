@@ -1,5 +1,6 @@
 function createOfferButtonTemplate(offerItem) {
-  return offerItem.offers.map(({
+  debugger
+  return offerItem?.offers.map(({
     id,
     offerPrice: price,
     title,
