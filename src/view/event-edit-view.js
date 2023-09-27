@@ -13,10 +13,11 @@ export default class EditView extends AbstractStatefulView {
   #datepickerFrom = null;
   #datepickerTo = null;
 
-  constructor({point, pointDestination, pointOffers, onSaveForm}) {
+  constructor({point, pointOffers,pointDestination, onSaveForm}) {
     super();
-    this.#pointDestination = pointDestination;
+
     this.#pointOffers = pointOffers;
+    this.#pointDestination = pointDestination;
     this.#handleSaveForm = onSaveForm;
 
     this._setState(EditView.parsePointToState(point));
@@ -27,9 +28,11 @@ export default class EditView extends AbstractStatefulView {
 
   get template() {
     return createEditTemplate({
-      state: this._state,
-      pointDestination: this.#pointDestination,
-      pointOffers : this.#pointOffers,
+      state: {
+        ...this._state,
+        offers: this.#getCurrentOffers(this._state.type),
+        destination: this.#getCurrentDestination(this._state.id)
+      }
     });
   }
 
@@ -76,17 +79,26 @@ export default class EditView extends AbstractStatefulView {
     this.#handleSaveForm(EditView.parseStateToPoint(this._state));
   };
 
+  #getCurrentOffers(offerType) {
+    return this.#pointOffers.filter((offer) => offer.type === offerType);
+  }
+
+  #getCurrentDestination(destinationType) {
+  //* dstination points don't generate because mock id is either genereates random id numbers, or the same id at the moment.
+  //* This problem should go away after recieving the data from the server in the end
+    return this.#pointDestination .find((destinationById) => destinationById.id === destinationType);
+
+
+  }
+  //*need to generate different price when choosing different type and destination//
+
   #eventTypeChangeHandler = (evt) => {
 
-    const offers = this.#pointOffers.filter((offer) => offer.type === evt.target.value);
-    this.#pointOffers = offers;
     this.updateElement({
-      points: {
-        ...this._state.points,
-        type: evt.target.type,
-        offers,
-      }
-
+      ...this._state,
+      type: evt.target.value,
+      offers: this.#getCurrentOffers(evt.target.value),
+      destination: this.#getCurrentDestination (evt.target.value)
     });
 
   };
@@ -94,18 +106,16 @@ export default class EditView extends AbstractStatefulView {
 
   #eventDestinationChangeHandler = (evt) => {
 
-    const selectedDestination = this.#pointDestination
-      .find((destination) => destination.name === evt.target.value);
+    // const selectedDestination = this.#pointDestination
+    //   .find((destination) => destination.name === evt.target.value);
 
-    const selectedDestinationId = (selectedDestination)
-      ? selectedDestination.id
-      : null;
+    // const selectedDestinationId = (selectedDestination)
+    //   ? selectedDestination.id
+    //   : null;
 
     this.updateElement({
-      point: {
-        ...this._state.point,
-        destination: selectedDestinationId,
-      }
+      ...this._state.point,
+      destination: this.#getCurrentDestination(evt.target.value),
     });
   };
 
@@ -166,7 +176,7 @@ export default class EditView extends AbstractStatefulView {
         ...commonConfig,
         defaultDate: this._state.dateTo,
         onClose: this.#dateToCloseHandeler,
-        // maxDate: this._state.point.dateFrom,
+        minDate: this._state.dateFrom,
       }
     );
   }

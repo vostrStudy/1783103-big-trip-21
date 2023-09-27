@@ -80,7 +80,6 @@ export default class EventPresenter {
 
   //* - Сортируем точки sortType = (evt.target.dataset.item). запоминаем current type, then sort it afterwards;
   #sortPoints = (sortType) =>{
-
     switch (sortType) {
       case SortType.PRICE:
         this.#points.sort(sortByPrice);
@@ -108,6 +107,7 @@ export default class EventPresenter {
   };
 
   #sortTypeChangeHandler = (sortType) => {
+
     if (this.#currentSortType === sortType) {
       return;
     }

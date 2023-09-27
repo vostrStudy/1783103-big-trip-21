@@ -15,6 +15,7 @@ function createPointTemplate({point}){
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
   const offersByType = offers.find((offerByType) => offerByType.type === type);
+  const destinationsById = destinations.find((destinationById) => destinationById.id === point.id);
 
   return(
     `
@@ -24,7 +25,7 @@ function createPointTemplate({point}){
         <div class="event__type">
             <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">${type} ${destinations.name}</h3>
+        <h3 class="event__title">${type} ${destinationsById.name} </h3>
         <div class="event__schedule">
             <p class="event__time">
             <time class="event__start-time" datetime="2019-03-18T10:30">${timeFrom}</time>

@@ -14,22 +14,20 @@ function createEventTypeItemTemplate(){
 }
 
 function createDestinationItemTemplate(){
-  return CITIES.map((destinations) => (
-    `
-    <option value="${destinations}"></option>
-    `
-  )).join('');
+  return CITIES
+    .map((destinations) => (`<option value="${destinations}"></option>`))
+    .join('');
 }
 
 
-function createEditTemplate({state, pointDestination, pointOffers}){
-  const point = state;
-  const { type,price,} = point;
-  // console.log(state)
-  const offersByType = pointOffers.find((offerByType) => offerByType.type === type);
+function createEditTemplate({
+  state: point
+}){
+  const { type,price,offers,destination} = point;
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
-debugger
+
+
   return(
     `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -53,9 +51,9 @@ debugger
           <label class="event__label  event__type-output" for="event-destination-1">
           ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${pointDestination.name}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination?.name}" list="destination-list-1">
           <datalist id="destination-list-1">
-          ${createDestinationItemTemplate(pointDestination)}
+          ${createDestinationItemTemplate(destination)}
           </datalist>
         </div>
 
@@ -85,11 +83,11 @@ debugger
               <section class="event__section  event__section--offers">
                   <h3 class="event__section-title  event__section-title--offers">Offers</h3>
                   <div class="event__available-offers">
-                    ${createOfferButtonTemplate(pointOffers)}
+                    ${createOfferButtonTemplate(offers[0])}
                   </div>
                 </section>
               </section>
-                ${createDestinationTemplate(pointDestination)}
+                ${createDestinationTemplate(destination)}
 
             </form>
           </li>`

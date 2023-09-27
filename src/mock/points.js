@@ -1,4 +1,4 @@
-import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger, generateRandomDate} from '../utils/utils.js';
+import {randomBoolean,getRandomArrayElement,getRandomNumber,getRandomInteger, generateRandomDate} from '../utils/utils.js';
 import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../utils/const.js';
 import Observable from '../framework/observable.js';
 
@@ -9,10 +9,14 @@ export default class MockService extends Observable {
     super();
     this.#points = this.generatePoints();
   }
+  //* changed mock for Id from the random in order to generate an array for the destinations;
+  //* need to wait for the server data to apply all the changes
+  // because the id number is the same the destination in point-edit template doesn't change, but should work in the future
+  //* sort stopped working also because the id number is the same for both points and destinations
 
   generateDestination(destinationAmount) {
     return Array.from({ length: destinationAmount }, () => ({
-      id: self.crypto.randomUUID(),
+      id: 'self.crypto.randomUUID()',
       description:DESCRIPTION,
       name:getRandomArrayElement(CITIES),
       pictures: Array.from({length:DESTINATION_COUNT}, () => ({
@@ -37,7 +41,7 @@ export default class MockService extends Observable {
 
   generatePoints() {
     return Array.from({ length: POINT_COUNT }, () => ({
-      id: self.crypto.randomUUID(),
+      id: 'self.crypto.randomUUID()',
       eventDate: generateRandomDate(new Date(2023, 1, 1), new Date()),
       dateFrom: generateRandomDate(new Date(2023, 1, 1), new Date()),
       dateTo: generateRandomDate(new Date(2023, 1, 1), new Date()),
@@ -45,16 +49,14 @@ export default class MockService extends Observable {
       type: getRandomArrayElement(TYPE),
       isFavorite: randomBoolean,
       offers: this.generateOffers(
-        getRandomInteger(0, 5),
+        getRandomInteger(1, 5),
       ),
-      destinations: getRandomValue(
-        this.generateDestination(3),
-      ),
+      destinations: this.generateDestination(5),
     }));
   }
 
-
   getPoints (){
+
     return this.#points;
   }
 

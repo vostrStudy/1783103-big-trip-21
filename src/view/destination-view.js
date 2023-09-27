@@ -10,6 +10,9 @@ export default class DestinationView extends AbstractView{
   }
 
   get template(){
+    if (!this.#pointDestination) {
+      // debugger
+    }
     return createDestinationTemplate(this.#pointDestination);
   }
 }
