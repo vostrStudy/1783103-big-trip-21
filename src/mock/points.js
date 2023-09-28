@@ -1,5 +1,5 @@
 import {randomBoolean,getRandomArrayElement,getRandomNumber,getRandomInteger, generateRandomDate} from '../utils/utils.js';
-import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../utils/const.js';
+import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION,IDARRAY } from '../utils/const.js';
 import Observable from '../framework/observable.js';
 
 export default class MockService extends Observable {
@@ -16,7 +16,7 @@ export default class MockService extends Observable {
 
   generateDestination(destinationAmount) {
     return Array.from({ length: destinationAmount }, () => ({
-      id: 'self.crypto.randomUUID()',
+      id: getRandomArrayElement(IDARRAY),
       description:DESCRIPTION,
       name:getRandomArrayElement(CITIES),
       pictures: Array.from({length:DESTINATION_COUNT}, () => ({
@@ -41,7 +41,7 @@ export default class MockService extends Observable {
 
   generatePoints() {
     return Array.from({ length: POINT_COUNT }, () => ({
-      id: 'self.crypto.randomUUID()',
+      id: getRandomArrayElement(IDARRAY),
       eventDate: generateRandomDate(new Date(2023, 1, 1), new Date()),
       dateFrom: generateRandomDate(new Date(2023, 1, 1), new Date()),
       dateTo: generateRandomDate(new Date(2023, 1, 1), new Date()),

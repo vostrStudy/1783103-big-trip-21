@@ -5,7 +5,7 @@ import { createOfferTemplate } from './offer-template.js';
 function createPointTemplate({point}){
 
 
-  const { destinations, isFavorite, type, eventDate, dateFrom, dateTo, price, offers} = point;
+  const { destinations, isFavorite, type,id, eventDate, dateFrom, dateTo, price, offers} = point;
 
   const date = formatEventDate (eventDate);
   const timeFrom = formatEventTimeFrom (dateFrom);

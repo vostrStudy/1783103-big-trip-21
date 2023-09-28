@@ -117,6 +117,7 @@ export default class EventPresenter {
     this.#clearPoints();
     // - Рендерим список заново
     this.#renderPoints();
+
   };
 
   #renderPointsContainer = () => {

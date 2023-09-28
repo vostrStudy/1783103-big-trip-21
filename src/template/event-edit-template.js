@@ -15,7 +15,7 @@ function createEventTypeItemTemplate(){
 
 function createDestinationItemTemplate(){
   return CITIES
-    .map((destinations) => (`<option value="${destinations}"></option>`))
+    .map((destination) => (`<option value="${destination}"></option>`))
     .join('');
 }
 
@@ -23,7 +23,7 @@ function createDestinationItemTemplate(){
 function createEditTemplate({
   state: point
 }){
-  const { type,price,offers,destination} = point;
+  const { type,id,price,offers,destination} = point;
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
 

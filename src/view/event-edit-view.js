@@ -86,6 +86,7 @@ export default class EditView extends AbstractStatefulView {
   #getCurrentDestination(destinationType) {
   //* dstination points don't generate because mock id is either genereates random id numbers, or the same id at the moment.
   //* This problem should go away after recieving the data from the server in the end
+
     return this.#pointDestination .find((destinationById) => destinationById.id === destinationType);
 
 
@@ -98,13 +99,15 @@ export default class EditView extends AbstractStatefulView {
       ...this._state,
       type: evt.target.value,
       offers: this.#getCurrentOffers(evt.target.value),
-      destination: this.#getCurrentDestination (evt.target.value)
     });
 
   };
 
 
   #eventDestinationChangeHandler = (evt) => {
+    const selectedDestination = this.#pointDestination
+      .find((destination) => destination.name === evt.target.value);
+    const selectedDestinationId = selectedDestination.id;
 
     // const selectedDestination = this.#pointDestination
     //   .find((destination) => destination.name === evt.target.value);
@@ -114,8 +117,9 @@ export default class EditView extends AbstractStatefulView {
     //   : null;
 
     this.updateElement({
-      ...this._state.point,
-      destination: this.#getCurrentDestination(evt.target.value),
+      ...this._state,
+      id: selectedDestinationId,
+      destination: this.#getCurrentDestination(selectedDestinationId),
     });
   };
 

@@ -29,6 +29,16 @@ const TYPE = [
   'Restaurant',
 ];
 
+const IDARRAY = [
+  self.crypto.randomUUID(),
+  self.crypto.randomUUID(),
+  self.crypto.randomUUID(),
+  self.crypto.randomUUID(),
+  self.crypto.randomUUID(),
+  self.crypto.randomUUID(),
+
+];
+
 const FilterType = {
   EVERYTHING:'everything',
   FUTURE: 'future',
@@ -74,6 +84,6 @@ const DESTINATION_COUNT = getRandomInteger(1, 10);
 const POINT_COUNT = 4;
 
 export {CITIES,TYPE,DURATION,PRICE,
-  DESCRIPTION,UUID,DESTINATION_COUNT,
+  DESCRIPTION,IDARRAY,UUID,DESTINATION_COUNT,
   POINT_COUNT, FilterType,SortType,
   enabledSortType, Mode};
