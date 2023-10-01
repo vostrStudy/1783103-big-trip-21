@@ -1,5 +1,5 @@
 function createDestinationTemplate(pointDestination){
-
+debugger
   const {description,pictures,name} = pointDestination;
 
   const pictureArray = pictures.map(({src, pictureDescription}) =>

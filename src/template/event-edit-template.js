@@ -13,9 +13,9 @@ function createEventTypeItemTemplate(){
 
 }
 
-function createDestinationItemTemplate(){
-  return CITIES
-    .map((destination) => (`<option value="${destination}"></option>`))
+function createDestinationItemTemplate(destinations){
+  return destinations
+    .map((destination) => (`<option value="${destination.name}"></option>`))
     .join('');
 }
 
@@ -23,10 +23,10 @@ function createDestinationItemTemplate(){
 function createEditTemplate({
   state: point
 }){
-  const { type,id,price,offers,destination} = point;
+debugger
+  const { type,id,price,offers,destination, destinations} = point;
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
-
 
   return(
     `<li class="trip-events__item">
@@ -53,7 +53,7 @@ function createEditTemplate({
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination?.name}" list="destination-list-1">
           <datalist id="destination-list-1">
-          ${createDestinationItemTemplate(destination)}
+          ${createDestinationItemTemplate(destinations)}
           </datalist>
         </div>
 

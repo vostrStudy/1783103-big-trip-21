@@ -1,5 +1,7 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {createEditTemplate} from '../template/event-edit-template.js';
+import { getRandomValue } from '../utils/utils.js';
+
 
 import flatpickr from 'flatpickr';
 
@@ -9,16 +11,19 @@ export default class EditView extends AbstractStatefulView {
   // #point = null;
   #pointDestination = null;
   #pointOffers = null;
-  #handleSaveForm = null;
+  #handleOnSaveForm = null;
+  #handleDeleteClick = null;
+
   #datepickerFrom = null;
   #datepickerTo = null;
 
-  constructor({point, pointOffers,pointDestination, onSaveForm}) {
+  constructor({point, pointOffers,pointDestination, onSaveForm, onDeleteClick}) {
     super();
 
     this.#pointOffers = pointOffers;
     this.#pointDestination = pointDestination;
-    this.#handleSaveForm = onSaveForm;
+    this.#handleOnSaveForm = onSaveForm;
+    this.#handleDeleteClick = onDeleteClick;
 
     this._setState(EditView.parsePointToState(point));
 
@@ -31,7 +36,7 @@ export default class EditView extends AbstractStatefulView {
       state: {
         ...this._state,
         offers: this.#getCurrentOffers(this._state.type),
-        destination: this.#getCurrentDestination(this._state.id)
+        destination: this.#getCurrentDestination(this.#pointDestination.name)
       }
     });
   }
@@ -39,6 +44,7 @@ export default class EditView extends AbstractStatefulView {
   //check why in retrospective there is a n arrow function and slightly different value//
   // reset = (point) => this.updateElement({point});
   reset(point) {
+
     this.updateElement(
       EditView.parsePointToState(point),
     );
@@ -60,8 +66,8 @@ export default class EditView extends AbstractStatefulView {
   _restoreHandlers (){
     this.element.querySelector('.event__save-btn')
       .addEventListener('submit',this.#saveFormHandler);
-    this.element.querySelector('.event__reset-btn')
-      .addEventListener('click',this.#saveFormHandler);
+    // this.element.querySelector('.event__reset-btn')
+    //   .addEventListener('click',this.#saveFormHandler);
     this.element.querySelector('.event__rollup-btn')
       .addEventListener('click',this.#saveFormHandler);
     this.element.querySelector('.event__input--price')
@@ -70,13 +76,22 @@ export default class EditView extends AbstractStatefulView {
       .addEventListener('change', this.#eventTypeChangeHandler);
     this.element.querySelector('.event__input--destination')
       .addEventListener('change', this.#eventDestinationChangeHandler);
+    this.element.querySelector('.event__reset-btn')
+      .addEventListener('click', this.#formDeleteClickHandler);
+
 
     this.#setDatepicker();
   }
 
   #saveFormHandler = (evt) => {
+
     evt.preventDefault();
-    this.#handleSaveForm(EditView.parseStateToPoint(this._state));
+    this.#handleOnSaveForm(EditView.parseStateToPoint(this._state));
+  };
+
+  #formDeleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleDeleteClick(EditView.parseStateToPoint(this._state));
   };
 
   #getCurrentOffers(offerType) {
@@ -84,12 +99,8 @@ export default class EditView extends AbstractStatefulView {
   }
 
   #getCurrentDestination(destinationType) {
-  //* dstination points don't generate because mock id is either genereates random id numbers, or the same id at the moment.
-  //* This problem should go away after recieving the data from the server in the end
 
-    return this.#pointDestination .find((destinationById) => destinationById.id === destinationType);
-
-
+    return this.#pointDestination.find((destinationByName) => destinationByName.name === destinationType);
   }
   //*need to generate different price when choosing different type and destination//
 
@@ -105,9 +116,11 @@ export default class EditView extends AbstractStatefulView {
 
 
   #eventDestinationChangeHandler = (evt) => {
+    debugger
     const selectedDestination = this.#pointDestination
       .find((destination) => destination.name === evt.target.value);
-    const selectedDestinationId = selectedDestination.id;
+
+    // const selectedDestinationId = selectedDestination.id;
 
     // const selectedDestination = this.#pointDestination
     //   .find((destination) => destination.name === evt.target.value);
@@ -118,9 +131,11 @@ export default class EditView extends AbstractStatefulView {
 
     this.updateElement({
       ...this._state,
-      id: selectedDestinationId,
-      destination: this.#getCurrentDestination(selectedDestinationId),
+      // id: selectedDestinationId,
+      destination: this.#getCurrentDestination(selectedDestination),
+
     });
+
   };
 
   #priceInputHandler = (evt) => {
@@ -186,7 +201,8 @@ export default class EditView extends AbstractStatefulView {
   }
 
   static parsePointToState = (point) => ({...point});
+  //*gotta fill in the parse
 
-  static parseStateToPoint = (state) => state.point;
-
+  static parseStateToPoint = (state) => ({...state});
+  //*gotta fill in the parse
 }

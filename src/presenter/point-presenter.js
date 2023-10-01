@@ -2,6 +2,7 @@ import { render, replace, remove } from '../framework/render.js';
 import EditView from '../view/event-edit-view.js';
 import PointView from '../view/point-view.js';
 import { Mode } from '../utils/const.js';
+import { UserAction, UpdateType } from '../utils/const.js';
 
 export default class PointPresenter {
   #pointListContainer = null;
@@ -42,6 +43,7 @@ export default class PointPresenter {
       pointOffers: this.#point.offers,
       pointDestination: this.#point.destinations,
       onSaveForm: this.#handleOnSaveForm,
+      onDeleteClick: this.#handleDeleteClick
     });
 
 
@@ -69,6 +71,7 @@ export default class PointPresenter {
   }
 
   resetView() {
+
     if (this.#mode !== Mode.DEFAULT) {
       this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
@@ -76,34 +79,77 @@ export default class PointPresenter {
   }
 
   #replacePointToEdit = () => {
+
     replace(this.#pointEditComponent, this.#pointComponent);
     document.addEventListener('keydown', this.#escKeyDownHandler);
     this.#handleModeChange();
     this.#mode = Mode.EDITING;
+
   };
 
   #replaceEditToPoint = () => {
+
     replace (this.#pointComponent, this.#pointEditComponent);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#mode = Mode.DEFAULT;
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
+
+    this.#handleDataChange(
+      UserAction.UPDATE_TASK,
+      UpdateType.PATCH,
+      {...this.#point, isFavorite: !this.#point.isFavorite},
+    );
   };
 
   #handleOnPointRollClick = () => {
+
+    this.#handleDataChange(
+      UserAction.UPDATE_TASK,
+      UpdateType.PATCH,
+      this.#point,
+    );
     this.#replacePointToEdit();
   };
 
-  #handleOnSaveForm = () => {
-    this.#replaceEditToPoint();
+  #handleOnSaveForm = (update) => {
+
+    function isTypeEqual(TypeA, TypeB) {
+      return (TypeA === TypeB);
+    }
+    const isMinorUpdate =
+    //* Changed the type
+   ! isTypeEqual (this.#point.type, update.type);
+
+    this.#handleDataChange(
+      UserAction.UPDATE_TASK,
+      isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
+      update,
+      // UpdateType.MINOR,
+      // this.#point,
+    );
+    // this.#replaceEditToPoint();
+    debugger
   };
+  //* Changed the destination
+  //* Changed the time
+  //* Changed the price
+
+
+  #handleDeleteClick = () => {
+    this.#handleDataChange(
+      UserAction.DELETE_TASK,
+      UpdateType.MINOR,
+      this.#point,
+
+    );
+  };
+
 
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
     }
   };
