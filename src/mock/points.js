@@ -1,11 +1,12 @@
-import {randomBoolean,getRandomArrayElement,getRandomNumber, getRandomValue,getRandomInteger, generateRandomDate, getDateTo} from '../utils/utils.js';
+import {randomBoolean,getRandomArrayElement,getRandomNumber,getRandomInteger, generateRandomDate} from '../utils/utils.js';
 import { CITIES,TYPE, UUID,POINT_COUNT,DESTINATION_COUNT,DESCRIPTION } from '../utils/const.js';
+import Observable from '../framework/observable.js';
 
-
-export default class MockService {
+export default class MockService extends Observable {
   #points = [];
 
   constructor(){
+    super();
     this.#points = this.generatePoints();
   }
 
@@ -35,29 +36,26 @@ export default class MockService {
   }
 
   generatePoints() {
-  // for recieving the data from the server, need to delete the getter for the dateTo key//
-    return Array.from({ length: POINT_COUNT }, () => ({
+
+    const destinations = this.generateDestination(4);
+
+    return Array.from({ length: POINT_COUNT }, (_el, idx) => ({
       id: self.crypto.randomUUID(),
       eventDate: generateRandomDate(new Date(2023, 1, 1), new Date()),
-      get dateFrom(){
-        return this.eventDate;
-      },
-      get dateTo(){
-        return getDateTo(this.eventDate);
-      },
+      dateFrom: generateRandomDate(new Date(2023, 1, 1), new Date()),
+      dateTo: generateRandomDate(new Date(2023, 1, 1), new Date()),
       price: getRandomNumber(),
       type: getRandomArrayElement(TYPE),
       isFavorite: randomBoolean,
       offers: this.generateOffers(
-        getRandomInteger(0, 2),
+        getRandomInteger(1, 5),
       ),
-      destinations: getRandomValue(
-        this.generateDestination(3),
-      ),
+      destinations,
+      destination: destinations[idx].name,
     }));
   }
 
-  getPoints(){
+  get (){
     return this.#points;
   }
 }

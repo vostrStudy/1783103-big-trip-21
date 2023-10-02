@@ -1,4 +1,5 @@
 function createOfferTemplate(offerItem) {
+
   return offerItem.offers.map((item) => (
     `<li class="event__offer">
       <span class="event__offer-title">${item.title}</span>

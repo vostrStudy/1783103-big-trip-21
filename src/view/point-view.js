@@ -21,6 +21,7 @@ export default class PointView extends AbstractView {
   }
 
   get template() {
+
     return createPointTemplate({
       point: this.#point,
       pointDestination: this.#pointDestination,

@@ -1,5 +1,7 @@
 function createDestinationTemplate(pointDestination){
+
   const {description,pictures,name} = pointDestination;
+
   const pictureArray = pictures.map(({src, pictureDescription}) =>
     `<img class="event__photo" src="${src}" alt="${pictureDescription}">`
   );

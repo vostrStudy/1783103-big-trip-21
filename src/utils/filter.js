@@ -18,11 +18,11 @@ function isFuture (dateFrom) {
   return dateFrom && dayjs(currentDate).isBefore (dateFrom, 'minutes');
 }
 
-const filter = {
+const filters = {
   [FilterType.EVERYTHING]: (points) => points,
   [FilterType.FUTURE]: (points) => points.filter((point) => isFuture(point.dateFrom)),
   [FilterType.PRESENT]: (points) => points.filter((point) => isCurrent(point.dateFrom,point.dateTo)),
   [FilterType.PAST]: (points) => points.filter((point) => isPast(point.dateTo)),
 };
 
-export {filter};
+export {filters};

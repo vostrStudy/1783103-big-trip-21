@@ -1,20 +1,30 @@
 import { formatFullDate } from '../utils/utils.js';
 import { createDestinationTemplate } from './destiation-template.js';
 import { createOfferButtonTemplate } from './offer-button-template.js';
+import { TYPE} from '../utils/const.js';
 
-function createEventTypeItemTemplate(type){
-  return(
+function createEventTypeItemTemplate(){
+  return TYPE.map((type) => (
     `<div class="event__type-item">
-      <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
-      <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
-    </div>`
-  );
+         <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
+         <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
+      </div>`
+  )).join('');
+
 }
 
-function createEditTemplate({point}){
+function createDestinationItemTemplate(destinations){
+  return destinations
+    .map((destination) => (`<option value="${destination.name}"></option>`))
+    .join('');
+}
 
-  const { destinations,type,price,offers} = point;
-  const offersByType = offers.find((offerByType) => offerByType.type === type);
+
+function createEditTemplate({
+  state: point
+}){
+  const { type,price,offers,destination, destinations} = point;
+  const currentDestinationObj = destinations.find(({ name }) => name === destination);
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
 
@@ -32,7 +42,7 @@ function createEditTemplate({point}){
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-              ${createEventTypeItemTemplate(type)}
+              ${createEventTypeItemTemplate(point)}
             </fieldset>
           </div>
         </div>
@@ -41,11 +51,10 @@ function createEditTemplate({point}){
           <label class="event__label  event__type-output" for="event-destination-1">
           ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destinations.name}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" 
+          name="event-destination" value="${destination}" list="destination-list-1">
           <datalist id="destination-list-1">
-          <option value="${destinations.name}"></option>
-          <option value="${destinations.name}"></option>
-          <option value="${destinations.name}"></option>
+          ${createDestinationItemTemplate(destinations)}
           </datalist>
         </div>
 
@@ -75,11 +84,11 @@ function createEditTemplate({point}){
               <section class="event__section  event__section--offers">
                   <h3 class="event__section-title  event__section-title--offers">Offers</h3>
                   <div class="event__available-offers">
-                    ${createOfferButtonTemplate(offersByType)}
+                    ${createOfferButtonTemplate(offers[0])}
                   </div>
                 </section>
               </section>
-                ${createDestinationTemplate(destinations)}
+                ${createDestinationTemplate(currentDestinationObj)}
 
             </form>
           </li>`
