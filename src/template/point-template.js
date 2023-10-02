@@ -5,7 +5,7 @@ import { createOfferTemplate } from './offer-template.js';
 function createPointTemplate({point}){
 
 
-  const { destinations, isFavorite, type,id, eventDate, dateFrom, dateTo, price, offers} = point;
+  const { destinations, isFavorite, type, eventDate, dateFrom, dateTo, price, offers} = point;
 
   const date = formatEventDate (eventDate);
   const timeFrom = formatEventTimeFrom (dateFrom);
@@ -15,7 +15,7 @@ function createPointTemplate({point}){
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
   const offersByType = offers.find((offerByType) => offerByType.type === type);
-  const destination = getRandomValue(destinations)
+  const destination = getRandomValue(destinations);
   // const destinationsByName = destinations.find((destinationByName) => destinationByName.name === point.id);
 
   return(

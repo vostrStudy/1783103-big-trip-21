@@ -40,7 +40,7 @@ export default class EventPresenter {
     const filterType = this.#filterModel.filter;
     const points = this.#eventModel.events;
     const filteredPoints = filters[filterType](points);
-    debugger
+
     // const points = this.#eventModel.events;
     switch (this.#currentSortType) {
       case SortType.PRICE:
@@ -68,11 +68,10 @@ export default class EventPresenter {
     this.#pointPresenters.set(point.id,pointPresenter);
   }
 
-  #renderPoints(points) {
-    points = sort[this.#currentSortType](this.#eventModel.get());
-    points.forEach((point) => this.#renderPoint(point));
-    debugger
-
+  #renderPoints() {
+    const points = this.#eventModel.get();
+    const sortedPoints = sort[this.#currentSortType](points);
+    sortedPoints.forEach((point) => this.#renderPoint(point));
   }
 
   #clearPoints(){
@@ -94,7 +93,7 @@ export default class EventPresenter {
 
   #handleViewAction = (actionType, updateType, update) => {
 
-    console.log(actionType, updateType, update);
+    // console.log(actionType, updateType, update);
     switch (actionType) {
       case UserAction.UPDATE_TASK:
         this.#eventModel.updatePoint(updateType, update);
@@ -113,7 +112,7 @@ export default class EventPresenter {
   };
 
   #handleModelEvent = (updateType, state) => {
-    console.log(updateType, state);
+    // console.log(updateType, state);
     switch (updateType) {
       case UpdateType.PATCH:
         // - обновить часть списка
@@ -176,7 +175,7 @@ export default class EventPresenter {
 
   #renderBoard = () => {
 
-    const points = this.points;
+    // const points = this.points;
     const pointCount = 2;
     // const pointCount = points.length;
 

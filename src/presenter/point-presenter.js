@@ -38,10 +38,8 @@ export default class PointPresenter {
     });
 
     this.#pointEditComponent = new EditView ({
-
       point: this.#point,
       pointOffers: this.#point.offers,
-      pointDestination: this.#point.destinations,
       onSaveForm: this.#handleOnSaveForm,
       onDeleteClick: this.#handleDeleteClick
     });
@@ -123,6 +121,7 @@ export default class PointPresenter {
    ! isTypeEqual (this.#point.type, update.type);
 
     this.#handleDataChange(
+
       UserAction.UPDATE_TASK,
       isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
       update,
@@ -130,7 +129,6 @@ export default class PointPresenter {
       // this.#point,
     );
     // this.#replaceEditToPoint();
-    debugger
   };
   //* Changed the destination
   //* Changed the time

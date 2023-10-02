@@ -1,7 +1,7 @@
 import { formatFullDate } from '../utils/utils.js';
 import { createDestinationTemplate } from './destiation-template.js';
 import { createOfferButtonTemplate } from './offer-button-template.js';
-import { TYPE, CITIES } from '../utils/const.js';
+import { TYPE} from '../utils/const.js';
 
 function createEventTypeItemTemplate(){
   return TYPE.map((type) => (
@@ -23,8 +23,8 @@ function createDestinationItemTemplate(destinations){
 function createEditTemplate({
   state: point
 }){
-debugger
-  const { type,id,price,offers,destination, destinations} = point;
+  const { type,price,offers,destination, destinations} = point;
+  const currentDestinationObj = destinations.find(({ name }) => name === destination);
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
 
@@ -51,7 +51,8 @@ debugger
           <label class="event__label  event__type-output" for="event-destination-1">
           ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination?.name}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" 
+          name="event-destination" value="${destination}" list="destination-list-1">
           <datalist id="destination-list-1">
           ${createDestinationItemTemplate(destinations)}
           </datalist>
@@ -87,7 +88,7 @@ debugger
                   </div>
                 </section>
               </section>
-                ${createDestinationTemplate(destination)}
+                ${createDestinationTemplate(currentDestinationObj)}
 
             </form>
           </li>`

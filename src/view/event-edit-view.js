@@ -1,10 +1,6 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {createEditTemplate} from '../template/event-edit-template.js';
-import { getRandomValue } from '../utils/utils.js';
-
-
 import flatpickr from 'flatpickr';
-
 import 'flatpickr/dist/flatpickr.min.css';
 
 export default class EditView extends AbstractStatefulView {
@@ -36,7 +32,7 @@ export default class EditView extends AbstractStatefulView {
       state: {
         ...this._state,
         offers: this.#getCurrentOffers(this._state.type),
-        destination: this.#getCurrentDestination(this.#pointDestination.name)
+        destination: this._state.destination,
       }
     });
   }
@@ -116,9 +112,9 @@ export default class EditView extends AbstractStatefulView {
 
 
   #eventDestinationChangeHandler = (evt) => {
-    debugger
-    const selectedDestination = this.#pointDestination
-      .find((destination) => destination.name === evt.target.value);
+
+    // const selectedDestination = this.#pointDestination
+    //   .find((destination) => destination.name === evt.target.value);
 
     // const selectedDestinationId = selectedDestination.id;
 
@@ -132,7 +128,7 @@ export default class EditView extends AbstractStatefulView {
     this.updateElement({
       ...this._state,
       // id: selectedDestinationId,
-      destination: this.#getCurrentDestination(selectedDestination),
+      destination: evt.target.value,
 
     });
 

@@ -36,7 +36,7 @@ export default class FilterPresenter {
       type,
       count: filters[type](points).length
     }));
-    debugger
+    // debugger
   }
 
 
