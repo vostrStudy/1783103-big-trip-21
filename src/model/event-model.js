@@ -13,7 +13,7 @@ export default class EventModel extends Observable {
   }
 
   get() {
-    return this.events;
+    return this.#points;
   }
 
   updatePoint(updateType, update) {

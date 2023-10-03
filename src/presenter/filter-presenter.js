@@ -21,42 +21,18 @@ export default class FilterPresenter {
     this.#filterModel.addObserver(this.#handleModelEvent);
 
     this.#filters = Object.entries(filters).map(
-      ([filterType, filterPoints ],index) => ({
+      ([filterType ],index) => ({
         type: filterType,
         isChecked: index === 0,
-        isDisabled: filterPoints (this.#eventModel.get()).length === 0,
+
       }),
     );
   }
 
   get filters() {
-    const points = this.#eventModel.events;
-
     return Object.values(FilterType).map((type) => ({
       type,
-      count: filters[type](points).length
     }));
-    // debugger
-  }
-
-
-  init() {
-
-    const prevFilterComponent = this.#filterComponent;
-
-    this.#filterComponent = new FilterView({
-      items:this.#filters,
-      currentFilterType: this.#filterModel.filter,
-      onFilterTypeChange: this.#handleFilterTypeChange
-    });
-
-    if (prevFilterComponent === null) {
-      render(this.#filterComponent, this.#container);
-      return;
-    }
-
-    replace(this.#filterComponent, prevFilterComponent);
-    remove(prevFilterComponent);
   }
 
   #handleModelEvent = () => {
@@ -71,8 +47,23 @@ export default class FilterPresenter {
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
 
-  // init() {
-  //   debugger
-  //   render (new FilterView({items:this.#filters}),this.#container);
-  // }
+  init() {
+
+    const prevFilterComponent = this.#filterComponent;
+
+    this.#filterComponent = new FilterView({
+      items:this.#filters,
+      currentFilterType: this.#filterModel.filter,
+      onItemChange: this.#handleFilterTypeChange
+    });
+
+    if (prevFilterComponent === null) {
+      render(this.#filterComponent, this.#container);
+      return;
+    }
+
+    replace(this.#filterComponent, prevFilterComponent);
+    remove(prevFilterComponent);
+  }
+
 }

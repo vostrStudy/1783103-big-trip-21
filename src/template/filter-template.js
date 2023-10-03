@@ -1,5 +1,5 @@
 
-function createFilterItemTemplate({type, currentFilterType, isDisabled}){
+function createFilterItemTemplate({type, currentFilterType}){
 
   return `
   <div class="trip-filters__filter">
@@ -9,7 +9,7 @@ function createFilterItemTemplate({type, currentFilterType, isDisabled}){
     value="${type}" 
     data-item = "${type}"
     ${type === currentFilterType ? 'checked' : ''}
-    ${isDisabled ? 'disabled' : ''}>
+    >
     <label class="trip-filters__filter-label" for="filter-${type}">${type}<span class="filter__${type}-count">
     </span></label>
   </div>

@@ -23,6 +23,7 @@ function createDestinationItemTemplate(destinations){
 function createEditTemplate({
   state: point
 }){
+
   const { type,price,offers,destination, destinations} = point;
   const currentDestinationObj = destinations.find(({ name }) => name === destination);
   const timeFrom = formatFullDate (point.dateFrom);

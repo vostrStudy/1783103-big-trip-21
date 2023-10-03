@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-const FULL_DATE_FORMAT = 'DD/mm/YY HH:mm';
+const FULL_DATE_FORMAT = 'DD/MM/YY HH:mm';
 const DATE_FORMAT = 'DD MMM';
 const TIME_FORMAT = 'HH:mm';
 
@@ -15,8 +15,8 @@ function getRandomNumberPhotos(){
   return Math.floor(Math.random() * 10) + 1;
 }
 
-function formatEventDate(eventDate) {
-  return eventDate ? dayjs(eventDate).format(DATE_FORMAT) : '';
+function formatMainEventDate(dateFrom) {
+  return dateFrom ? dayjs(dateFrom).format(DATE_FORMAT) : '';
 }
 
 function formatFullDate(dateFrom) {
@@ -77,9 +77,10 @@ function getWeightForNullDate(dateA, dateB) {
 
 
 function sortByDay(pointA, pointB) {
-  const weight = getWeightForNullDate(pointA.dateFrom, pointB.dateTo);
 
-  return weight ?? dayjs(pointB.dateTo).diff(dayjs(pointA.dateFrom));
+  const weight = getWeightForNullDate(pointA.dateFrom, pointB.dateFrom);
+
+  return weight ?? dayjs(pointB.dateFrom).diff(dayjs(pointA.dateFrom));
 }
 
 function sortByPrice(pointA, pointB) {
@@ -101,7 +102,7 @@ function updateItem(items, update) {
   return items.map((item) => item.id === update.id ? update : item);
 }
 
-export{getRandomArrayElement,getRandomNumber, formatEventDate,
+export{getRandomArrayElement,getRandomNumber, formatMainEventDate,
   formatEventTimeFrom, formatEventTimeTo, getEventDuration,
   getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue,
   randomBoolean, generateRandomDate, getDateTo,sortByDay,sortByPrice,sortByTime, updateItem };

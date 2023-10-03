@@ -21,7 +21,7 @@ export default class PointPresenter {
     this.#handleModeChange = onModeChange;
   }
 
-  init(point) {
+  init (point) {
     this.#point = point;
 
     //creating constants for storing previously rendered items.
@@ -41,7 +41,9 @@ export default class PointPresenter {
       point: this.#point,
       pointOffers: this.#point.offers,
       onSaveForm: this.#handleOnSaveForm,
-      onDeleteClick: this.#handleDeleteClick
+      onDeleteClick: this.#handleDeleteClick,
+      onCloseForm: this.#handleCloseForm,
+      onOfferChange: this.#handleOfferChange,
     });
 
 
@@ -93,8 +95,8 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClick = () => {
-
     this.#handleDataChange(
+
       UserAction.UPDATE_TASK,
       UpdateType.PATCH,
       {...this.#point, isFavorite: !this.#point.isFavorite},
@@ -117,22 +119,35 @@ export default class PointPresenter {
       return (TypeA === TypeB);
     }
     const isMinorUpdate =
-    //* Changed the type
-   ! isTypeEqual (this.#point.type, update.type);
+   ! isTypeEqual (this.#point.type, update.type) ||
+   ! isTypeEqual (this.#point.destination, update.destination) ||
+   ! isTypeEqual (this.#point.dateFrom, update.dateFrom) ||
+   ! isTypeEqual (this.#point.dateTo, update.dateTo) ||
+   ! isTypeEqual (this.#point.price, update.price);
 
     this.#handleDataChange(
 
       UserAction.UPDATE_TASK,
       isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
       update,
-      // UpdateType.MINOR,
-      // this.#point,
     );
+
     // this.#replaceEditToPoint();
   };
-  //* Changed the destination
-  //* Changed the time
-  //* Changed the price
+
+  #handleCloseForm = () => {
+
+    this.#replaceEditToPoint();
+  };
+
+  #handleOfferChange = () => {
+
+    this.#handleDataChange(
+      UserAction.UPDATE_TASK,
+      UpdateType.PATCH,
+      this.#point,
+    );
+  };
 
 
   #handleDeleteClick = () => {

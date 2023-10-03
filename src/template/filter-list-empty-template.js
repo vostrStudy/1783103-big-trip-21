@@ -1,18 +1,21 @@
+import { FilterType } from '../utils/const.js';
 
-function createFilterListEmptyTemplate () {
+const NoPointsFilterTextType = {
+  [FilterType.EVERYTHING]: 'Click New Event to create your first point',
+  [FilterType.PAST]:'There are no past events now',
+  [FilterType.PRESENT]:'There are no present events now',
+  [FilterType.FUTURE]:'There are no future events now',
+};
+
+function createFilterListEmptyTemplate(filterType) {
+
+  const noPointsFilterText = NoPointsFilterTextType[filterType];
   return (`
     <section class="trip-events">
     <h2 class="visually-hidden">Trip events</h2>
 
-    <p class="trip-events__msg">Click New Event to create your first point</p>
-
-    <!--
-      Значение отображаемого текста зависит от выбранного фильтра:
-        * Everthing – 'Click New Event to create your first point'
-        * Past — 'There are no past events now';
-        * Present — 'There are no present events now';
-        * Future — 'There are no future events now'.
-    -->
+    <p class="trip-events__msg">${noPointsFilterText}</p>
+        
   </section>
     `);
 }

@@ -30,6 +30,7 @@ export default class PointView extends AbstractView {
   }
 
   #pointRollClickHandler = (evt) => {
+
     evt.preventDefault();
     this.#handlePointRollClick();
   };

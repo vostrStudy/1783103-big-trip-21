@@ -9,17 +9,22 @@ export default class EditView extends AbstractStatefulView {
   #pointOffers = null;
   #handleOnSaveForm = null;
   #handleDeleteClick = null;
+  #handleCloseForm = null;
+  #handleOfferChange = null;
 
   #datepickerFrom = null;
   #datepickerTo = null;
 
-  constructor({point, pointOffers,pointDestination, onSaveForm, onDeleteClick}) {
+  constructor({point, pointOffers,
+    pointDestination, onSaveForm,onCloseForm, onDeleteClick, onOfferChange}) {
     super();
 
     this.#pointOffers = pointOffers;
     this.#pointDestination = pointDestination;
     this.#handleOnSaveForm = onSaveForm;
     this.#handleDeleteClick = onDeleteClick;
+    this.#handleCloseForm = onCloseForm;
+    this.#handleOfferChange = onOfferChange;
 
     this._setState(EditView.parsePointToState(point));
 
@@ -28,6 +33,7 @@ export default class EditView extends AbstractStatefulView {
 
 
   get template() {
+
     return createEditTemplate({
       state: {
         ...this._state,
@@ -60,20 +66,20 @@ export default class EditView extends AbstractStatefulView {
   };
 
   _restoreHandlers (){
-    this.element.querySelector('.event__save-btn')
+    this.element.querySelector('.event--edit')
       .addEventListener('submit',this.#saveFormHandler);
-    // this.element.querySelector('.event__reset-btn')
-    //   .addEventListener('click',this.#saveFormHandler);
-    this.element.querySelector('.event__rollup-btn')
-      .addEventListener('click',this.#saveFormHandler);
     this.element.querySelector('.event__input--price')
-      .addEventListener('change', this.#priceInputHandler);
+      .addEventListener('input', this.#priceInputHandler);
     this.element.querySelector('.event__type-group')
       .addEventListener('change', this.#eventTypeChangeHandler);
     this.element.querySelector('.event__input--destination')
       .addEventListener('change', this.#eventDestinationChangeHandler);
     this.element.querySelector('.event__reset-btn')
       .addEventListener('click', this.#formDeleteClickHandler);
+    this.element.querySelector('.event__rollup-btn')
+      .addEventListener('click',this.#closeFormHandler);
+    this.element.querySelector('.event__offer-selector')
+      .addEventListener('click',this.#checkOfferHandler);
 
 
     this.#setDatepicker();
@@ -85,19 +91,27 @@ export default class EditView extends AbstractStatefulView {
     this.#handleOnSaveForm(EditView.parseStateToPoint(this._state));
   };
 
+  #closeFormHandler = (evt) => {
+
+    evt.preventDefault();
+    this.#handleCloseForm();
+  };
+
+
   #formDeleteClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleDeleteClick(EditView.parseStateToPoint(this._state));
   };
 
   #getCurrentOffers(offerType) {
+
     return this.#pointOffers.filter((offer) => offer.type === offerType);
   }
 
-  #getCurrentDestination(destinationType) {
+  // #getCurrentDestination(destinationType) {
 
-    return this.#pointDestination.find((destinationByName) => destinationByName.name === destinationType);
-  }
+  //   return this.#pointDestination.find((destinationByName) => destinationByName.name === destinationType);
+  // }
   //*need to generate different price when choosing different type and destination//
 
   #eventTypeChangeHandler = (evt) => {
@@ -135,31 +149,36 @@ export default class EditView extends AbstractStatefulView {
   };
 
   #priceInputHandler = (evt) => {
+  //*check why the price keeps popping out as NaN
     evt.preventDefault();
     this._setState({
-      point: {
-        ...this._state.point,
-        price: evt.target.valueAsNumber,
-      }
+      ...this._state,
+      price: evt.target.valueAsNumber,
     });
+  };
+
+  #checkOfferHandler = (evt) => {
+
+    console.log('offers');
+    evt.preventDefault();
+    this._setState({
+      ...this._state,
+    });
+    this.#handleOfferChange();
   };
 
   #dateFromCloseHandeler = ([userDate]) => {
     this._setState({
-      point: {
-        ...this._state.point,
-        dateFrom: userDate,
-      }
+      ...this._state,
+      dateFrom: userDate,
     });
     this.#datepickerTo.set('minDate', this._state.dateFrom);
   };
 
   #dateToCloseHandeler = ([userDate]) => {
     this._setState({
-      point: {
-        ...this._state.point,
-        dateTo: userDate,
-      }
+      ...this._state.point,
+      dateTo: userDate,
     });
     this.#datepickerTo.set('minDate', this._state.dateTo);
   };
