@@ -14,7 +14,9 @@ function createPointTemplate({point}){
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
+
   const offersByType = offers.find((offerByType) => offerByType.type === type);
+
   const destination = getRandomValue(destinations);
   // const destinationsByName = destinations.find((destinationByName) => destinationByName.name === point.id);
 

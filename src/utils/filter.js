@@ -3,7 +3,7 @@ import { generateRandomDate } from './utils.js';
 import dayjs from 'dayjs';
 
 const currentDate = generateRandomDate(new Date(2023, 1, 1), new Date());
-console.log(currentDate);
+// console.log(currentDate);
 
 function isPast(dateFrom) {
   return dateFrom && dayjs(currentDate).isAfter(dateFrom, 'minutes');

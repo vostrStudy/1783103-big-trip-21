@@ -16,22 +16,24 @@ export default class EventPresenter {
   #filterModel = null;
   #sortComponent = null;
   #noPointComponent = null;
-  #eventComponent = null;
 
+  #pointListContainer = null;
+  #eventComponent = new EventList();
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
 
+  #renderedPointsCount = 10;
   #pointPresenters = new Map();
   #newPointPresenter = null;
 
   constructor({eventContainer, eventModel,filterModel, onNewPointDestroy }) {
+
     this.#eventContainer = eventContainer;
     this.#eventModel = eventModel;
     this.#filterModel = filterModel;
 
     this.#newPointPresenter = new NewPointPresenter({
-
-      eventContainer: this.#eventContainer,
+      pointListContainer: this.#eventComponent.element,
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy
     });
@@ -172,7 +174,7 @@ export default class EventPresenter {
   #renderPointsContainer = (points) => {
     this.#eventComponent = new EventList();
     render(this.#eventComponent, this.#eventContainer);
-    this.#renderPoints(points);
+    this.#renderPoints(points.slice(0, this.#renderedPointsCount));
   };
 
   #renderBoard = () => {

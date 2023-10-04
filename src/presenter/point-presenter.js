@@ -43,7 +43,7 @@ export default class PointPresenter {
       onSaveForm: this.#handleOnSaveForm,
       onDeleteClick: this.#handleDeleteClick,
       onCloseForm: this.#handleCloseForm,
-      onOfferChange: this.#handleOfferChange,
+      // onOfferChange: this.#handleOfferChange,
     });
 
 
@@ -136,17 +136,7 @@ export default class PointPresenter {
   };
 
   #handleCloseForm = () => {
-
     this.#replaceEditToPoint();
-  };
-
-  #handleOfferChange = () => {
-
-    this.#handleDataChange(
-      UserAction.UPDATE_TASK,
-      UpdateType.PATCH,
-      this.#point,
-    );
   };
 
 

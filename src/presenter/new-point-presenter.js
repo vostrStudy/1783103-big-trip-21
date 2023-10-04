@@ -2,12 +2,15 @@ import {remove, render, RenderPosition} from '../framework/render.js';
 import EditView from '../view/event-edit-view.js';
 import { UserAction, UpdateType } from '../utils/const.js';
 
+
 export default class NewPointPresenter {
   #pointListContainer = null;
+  #pointComponent = null;
+  #pointEditComponent = null;
+
+
   #handleDataChange = null;
   #handleDestroy = null;
-
-  #pointComponent = null;
 
   constructor({pointListContainer, onDataChange, onDestroy}) {
     this.#pointListContainer = pointListContainer;
@@ -17,11 +20,11 @@ export default class NewPointPresenter {
 
   init() {
 
-    if (this.#pointComponent !== null) {
+    if (this.#pointEditComponent !== null) {
       return;
     }
 
-    this.#pointComponent = new EditView({
+    this.#pointEditComponent = new EditView({
 
       onDeleteClick: this.#handleDeleteClick,
       nSaveForm: this.#handleOnSaveForm,
@@ -29,20 +32,21 @@ export default class NewPointPresenter {
     //   onOfferChange: this.#handleOfferChange,
     });
 
-    render(this.#pointComponent, this.#pointListContainer, RenderPosition.AFTERBEGIN);
-
+    render(this.#pointEditComponent, this.#pointListContainer, RenderPosition.BEFOREEND);
+    debugger
     document.addEventListener('keydown', this.#escKeyDownHandler);
+
   }
 
   destroy() {
-    if (this.#pointComponent === null) {
+    if (this.#pointEditComponent === null) {
       return;
     }
 
     this.#handleDestroy();
 
-    remove(this.#pointComponent);
-    this.#pointComponent = null;
+    remove(this.#pointEditComponent);
+    this.#pointEditComponent = null;
 
     document.removeEventListener('keydown', this.#escKeyDownHandler);
   }

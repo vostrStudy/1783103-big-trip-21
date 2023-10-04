@@ -37,7 +37,7 @@ export default class MockService extends Observable {
 
   generatePoints() {
 
-    const destinations = this.generateDestination(4);
+    const destinations = this.generateDestination(5);
 
     return Array.from({ length: POINT_COUNT }, (_el, idx) => ({
       id: self.crypto.randomUUID(),
