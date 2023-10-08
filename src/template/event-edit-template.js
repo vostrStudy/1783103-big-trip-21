@@ -1,13 +1,12 @@
 import { formatFullDate } from '../utils/utils.js';
 import { createDestinationTemplate } from './destiation-template.js';
 import { createOfferButtonTemplate } from './offer-button-template.js';
-import { TYPE} from '../utils/const.js';
 
-function createEventTypeItemTemplate(){
-  return TYPE.map((type) => (
+function createEventTypeItemTemplate(typesOfTravel){
+  return typesOfTravel.map((typeOfTravel) => (
     `<div class="event__type-item">
-         <input id="event-type-${type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
-         <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-1">${type}</label>
+         <input id="event-type-${typeOfTravel.type}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${typeOfTravel.type}">
+         <label class="event__type-label  event__type-label--${typeOfTravel.type}" for="event-type-${typeOfTravel.type}-1">${typeOfTravel.type}</label>
       </div>`
   )).join('');
 
@@ -21,11 +20,11 @@ function createDestinationItemTemplate(destinations){
 
 
 function createEditTemplate({
-  state: point
+  state: point,
+  pointDestination,
+  pointOffers,
 }){
-
-  const { type,price,offers,destination, destinations} = point;
-  const currentDestinationObj = destinations.find(({ name }) => name === destination);
+  const { type,price,offers,destination} = point;
   const timeFrom = formatFullDate (point.dateFrom);
   const timeTo = formatFullDate (point.dateTo);
 
@@ -43,7 +42,7 @@ function createEditTemplate({
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-              ${createEventTypeItemTemplate(point)}
+              ${createEventTypeItemTemplate(pointOffers)}
             </fieldset>
           </div>
         </div>
@@ -53,9 +52,9 @@ function createEditTemplate({
           ${type}
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" 
-          name="event-destination" value="${destination}" list="destination-list-1">
+          name="event-destination" value="${destination.name}" list="destination-list-1">
           <datalist id="destination-list-1">
-          ${createDestinationItemTemplate(destinations)}
+          ${createDestinationItemTemplate(pointDestination)}
           </datalist>
         </div>
 
@@ -89,7 +88,7 @@ function createEditTemplate({
                   </div>
                 </section>
               </section>
-                ${createDestinationTemplate(currentDestinationObj)}
+                ${createDestinationTemplate(destination)}
 
             </form>
           </li>`

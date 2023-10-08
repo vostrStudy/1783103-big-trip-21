@@ -41,9 +41,9 @@ function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is exclusive and the minimum is inclusive
 }
 
-function getRandomValue(items) {
-  return items[getRandomInteger(1, items.length - 1)];
-}
+// function getRandomValue(items) {
+//   return items[getRandomInteger(1, items.length - 1)];
+// }
 
 const randomBoolean = Math.random() >= 0.5;
 
@@ -104,5 +104,5 @@ function updateItem(items, update) {
 
 export{getRandomArrayElement,getRandomNumber, formatMainEventDate,
   formatEventTimeFrom, formatEventTimeTo, getEventDuration,
-  getRandomNumberPhotos,formatFullDate, getRandomInteger, getRandomValue,
+  getRandomNumberPhotos,formatFullDate, getRandomInteger,
   randomBoolean, generateRandomDate, getDateTo,sortByDay,sortByPrice,sortByTime, updateItem };

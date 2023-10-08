@@ -2,48 +2,31 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import {createEditTemplate} from '../template/event-edit-template.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import { generateRandomDate,getRandomArrayElement,getRandomInteger,getRandomNumber } from '../utils/utils.js';
-import { TYPE, UUID,CITIES,DESTINATION_COUNT,DESCRIPTION} from '../utils/const.js';
-
-// const destinations = this.generateDestination();
-function generateDestination(destinationAmount) {
-  return Array.from({ length: destinationAmount }, () => ({
-    id: self.crypto.randomUUID(),
-    description:DESCRIPTION,
-    name:getRandomArrayElement(CITIES),
-    pictures: Array.from({length:DESTINATION_COUNT}, () => ({
-      src:`https://loremflickr.com/248/152?random=${getRandomNumber()}`,
-      pictureDescription:UUID,
-    })
-    )
-  }));
-}
-
-function generateOffers(offersAmount) {
-  return TYPE.map((type) => ({
-    type,
-    offers : Array.from({length: offersAmount}, () => ({
-      id: self.crypto.randomUUID(),
-      title: `Offer ${type}`,
-      offerPrice: getRandomNumber(),
-    })
-    )
-  }));
-}
-const destinations = generateDestination(5);
+import { generateRandomDate } from '../utils/utils.js';
 
 const BLANK_POINT = {
   id: self.crypto.randomUUID(),
   dateFrom: generateRandomDate(new Date(2023, 1, 1), new Date()),
   dateTo: generateRandomDate(new Date(2023, 1, 1), new Date()),
   price: '0',
-  type: getRandomArrayElement(TYPE),
-  isFavorite: '',
-  offers: generateOffers(
-    getRandomInteger(1, 5),
-  ),
-  destinations,
-  destination: destinations[0].name,
+  isFavorite: false,
+  offers: '',
+  destination: {
+    id: self.crypto.randomUUID(),
+    name: 'Chamonix',
+    description: 'Chamonix-Mont-Blanc (usually shortened to Chamonix) is a resort area near the junction of France, Switzerland and Italy.',
+    pictures: [
+      {
+        src: '',
+        description: ''
+      },
+      {
+        src: '',
+        description: ''
+      },
+    ]
+  },
+  type: 'Flight',
 };
 
 
@@ -58,11 +41,11 @@ export default class EditView extends AbstractStatefulView {
   #datepickerFrom = null;
   #datepickerTo = null;
 
-  constructor({point = BLANK_POINT,onSaveForm,onCloseForm, onDeleteClick}) {
+  constructor({point = BLANK_POINT,pointDestination,pointOffers,onSaveForm,onCloseForm, onDeleteClick}) {
     super();
+    this.#pointDestination = pointDestination;
+    this.#pointOffers = pointOffers;
 
-    this.#pointOffers = point.offers;
-    this.#pointDestination = point.destinations;
     this.#handleOnSaveForm = onSaveForm;
     this.#handleDeleteClick = onDeleteClick;
     this.#handleCloseForm = onCloseForm;
@@ -74,18 +57,17 @@ export default class EditView extends AbstractStatefulView {
 
 
   get template() {
-    debugger
     return createEditTemplate({
       state: {
         ...this._state,
         offers: this.#getCurrentOffers(this._state.type),
-        destination: this._state.destination,
-      }
+        destination: this.#getCurrentDestination(this._state.destination),
+      },
+      pointDestination: this.#pointDestination,
+      pointOffers: this.#pointOffers,
     });
   }
 
-  //check why in retrospective there is a n arrow function and slightly different value//
-  // reset = (point) => this.updateElement({point});
   reset(point) {
 
     this.updateElement(
@@ -119,9 +101,8 @@ export default class EditView extends AbstractStatefulView {
       .addEventListener('click', this.#formDeleteClickHandler);
     this.element.querySelector('.event__rollup-btn')
       .addEventListener('click',this.#closeFormHandler);
-    this.element.querySelector('.event__offer-selector')
-      .addEventListener('click',this.#checkOfferHandler);
-
+    // this.element.querySelector('.event__offer-selector')
+    //   .addEventListener('click',this.#checkOfferHandler);
 
     this.#setDatepicker();
   }
@@ -140,6 +121,7 @@ export default class EditView extends AbstractStatefulView {
 
 
   #formDeleteClickHandler = (evt) => {
+
     evt.preventDefault();
     this.#handleDeleteClick(EditView.parseStateToPoint(this._state));
   };
@@ -149,10 +131,10 @@ export default class EditView extends AbstractStatefulView {
     return this.#pointOffers.filter((offer) => offer.type === offerType);
   }
 
-  // #getCurrentDestination(destinationType) {
+  #getCurrentDestination(destinationType) {
 
-  //   return this.#pointDestination.find((destinationByName) => destinationByName.name === destinationType);
-  // }
+    return this.#pointDestination.find((destinationById) => destinationById.id === destinationType);
+  }
   //*need to generate different price when choosing different type and destination//
 
   #eventTypeChangeHandler = (evt) => {
@@ -182,29 +164,23 @@ export default class EditView extends AbstractStatefulView {
       }
     });
   };
+
   //*need to check how to apply querySelectorAll; also check if the evt.target.innerText is a suitable option
 
   #eventDestinationChangeHandler = (evt) => {
 
-    // const selectedDestination = this.#pointDestination
-    //   .find((destination) => destination.name === evt.target.value);
+    const selectedDestination = this.#pointDestination
+      .find((destination) => destination.name === evt.target.value);
 
-    // const selectedDestinationId = selectedDestination.id;
-
-    // const selectedDestination = this.#pointDestination
-    //   .find((destination) => destination.name === evt.target.value);
-
-    // const selectedDestinationId = (selectedDestination)
-    //   ? selectedDestination.id
-    //   : null;
+    const selectedDestinationId = (selectedDestination)
+      ? selectedDestination.id
+      : null;
 
     this.updateElement({
       ...this._state,
-      // id: selectedDestinationId,
-      destination: evt.target.value,
+      destination: selectedDestinationId,
 
     });
-
   };
 
   #priceInputHandler = (evt) => {

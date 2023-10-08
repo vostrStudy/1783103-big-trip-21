@@ -2,7 +2,7 @@ function createOfferButtonTemplate(offerItem) {
 
   return offerItem.offers.map(({
     id,
-    offerPrice: price,
+    price,
     title,
     isChecked,
   }) => (

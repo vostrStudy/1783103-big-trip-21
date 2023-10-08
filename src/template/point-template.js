@@ -1,11 +1,10 @@
-import { formatMainEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration, getRandomValue } from '../utils/utils.js';
+import { formatMainEventDate, formatEventTimeFrom,formatEventTimeTo, getEventDuration } from '../utils/utils.js';
 import { createOfferTemplate } from './offer-template.js';
 
 
-function createPointTemplate({point}){
+function createPointTemplate({point, pointDestination, pointOffers}){
 
-
-  const { destinations, isFavorite, type, dateFrom, dateTo, price, offers} = point;
+  const { destination, isFavorite, type, dateFrom, dateTo, price} = point;
 
   const date = formatMainEventDate (dateFrom);
   const timeFrom = formatEventTimeFrom (dateFrom);
@@ -14,11 +13,8 @@ function createPointTemplate({point}){
   const favoriteClassName = isFavorite
     ? 'event__favorite-btn event__favorite-btn--active'
     : 'event__favorite-btn event__favorite-btn--disabled';
-
-  const offersByType = offers.find((offerByType) => offerByType.type === type);
-
-  const destination = getRandomValue(destinations);
-  // const destinationsByName = destinations.find((destinationByName) => destinationByName.name === point.id);
+  const destinationsById = pointDestination.find((destinationById) => destinationById.id === destination);
+  const offersByType = pointOffers.find((offerByType) => offerByType.type === type);
 
   return(
     `
@@ -28,7 +24,7 @@ function createPointTemplate({point}){
         <div class="event__type">
             <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">${type} ${destination.name} </h3>
+        <h3 class="event__title">${type} ${destinationsById.name} </h3>
         <div class="event__schedule">
             <p class="event__time">
             <time class="event__start-time" datetime="2019-03-18T10:30">${timeFrom}</time>

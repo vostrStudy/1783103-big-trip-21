@@ -5,6 +5,7 @@ import { Mode } from '../utils/const.js';
 import { UserAction, UpdateType } from '../utils/const.js';
 
 export default class PointPresenter {
+
   #pointListContainer = null;
   #pointComponent = null;
   #pointEditComponent = null;
@@ -13,6 +14,8 @@ export default class PointPresenter {
   #handleModeChange = null;
 
   #point = null;
+  #pointDestination = null;
+  #pointOffers = null;
   #mode = Mode.DEFAULT;
 
   constructor({pointListContainer, onDataChange, onModeChange}) {
@@ -21,8 +24,10 @@ export default class PointPresenter {
     this.#handleModeChange = onModeChange;
   }
 
-  init (point) {
+  init (point,offers,destinations) {
     this.#point = point;
+    this.#pointDestination = destinations;
+    this.#pointOffers = offers;
 
     //creating constants for storing previously rendered items.
     //If the items have been rendered before (not equal to null),
@@ -32,14 +37,19 @@ export default class PointPresenter {
     const prevPointEditComponent = this.#pointEditComponent;
 
     this.#pointComponent = new PointView ({
+
       point: this.#point,
+      pointDestination: this.#pointDestination,
+      pointOffers: this.#pointOffers,
       onPointRollClick: this.#handleOnPointRollClick,
       onFavoriteClick: this.#handleFavoriteClick,
     });
 
     this.#pointEditComponent = new EditView ({
+
       point: this.#point,
-      pointOffers: this.#point.offers,
+      pointDestination: this.#pointDestination,
+      pointOffers: this.#pointOffers,
       onSaveForm: this.#handleOnSaveForm,
       onDeleteClick: this.#handleDeleteClick,
       onCloseForm: this.#handleCloseForm,
